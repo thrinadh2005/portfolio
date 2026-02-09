@@ -835,16 +835,8 @@ section.show {
   cursor: pointer;
 }
 
-/* ================= RESPONSIVE ================= */
+/* ================= RESPONSIVE TWEAKS ================= */
 @media (max-width: 992px) {
-
-  .hero-container,
-  .about-container,
-  .contact-container {
-    grid-template-columns: 1fr;
-    text-align: center;
-  }
-
   .navbar {
     width: 95%;
     padding: 10px 20px;
@@ -852,14 +844,12 @@ section.show {
 
   .nav-links {
     display: none;
+    /* Mobile menu can be added if needed */
   }
 
-  .hero-image {
-    order: -1;
-  }
-
-  .hero-content {
-    padding: 30px;
+  .section-card {
+    padding: 30px 20px;
+    border-radius: 30px;
   }
 
   .hero-btns,
@@ -874,5 +864,16 @@ section.show {
 
   .timeline-item::before {
     left: -26px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-head h2 {
+    font-size: 1.8rem;
+  }
+
+  .achievement-item {
+    flex-direction: column;
+    text-align: center;
   }
 }
