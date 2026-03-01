@@ -18,6 +18,9 @@
   --border: rgba(255, 255, 255, 0.08);
   --font-main: 'Outfit', sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --navbar-bg: rgba(15, 23, 42, 0.8);
+  --navbar-bg-solid: rgba(15, 23, 42, 0.95);
+  --nav-hover-bg: rgba(255, 255, 255, 0.05);
 }
 
 .light {
@@ -32,6 +35,9 @@
   --accent2: #00d2ff;
   --accent2-glow: rgba(0, 210, 255, 0.1);
   --border: #e2e8f0;
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --navbar-bg-solid: rgba(255, 255, 255, 0.95);
+  --nav-hover-bg: rgba(0, 0, 0, 0.06);
 }
 
 /* ================= GLOBAL RESET & BASE ================= */
@@ -180,7 +186,7 @@ ul {
   width: 95%;
   max-width: 1200px;
   z-index: 1000;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--navbar-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 12px 30px;
@@ -218,7 +224,7 @@ ul {
 
 .nav-links a:hover {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--nav-hover-bg);
 }
 
 .nav-links a.active {
@@ -246,7 +252,7 @@ ul {
   top: 10px;
   padding: 8px 25px;
   width: 90%;
-  background: rgba(15, 23, 42, 0.95);
+  background: var(--navbar-bg-solid);
 }
 
 /* ================= HEADER & PROFILE ================= */
