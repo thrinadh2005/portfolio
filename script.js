@@ -1,6 +1,7 @@
 
 // DOM Elements
 const themeToggle = document.getElementById('themeToggle');
+const voiceToggle = document.getElementById('voiceToggle');
 const body = document.body;
 const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImage");
@@ -216,6 +217,148 @@ if (contactForm) {
   });
 }
 
+function initVoiceControl() {
+  const btn = document.getElementById('voiceToggle');
+  const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!btn || !Recognition) {
+    if (btn) btn.style.display = 'none';
+    return;
+  }
+  const recognition = new Recognition();
+  recognition.continuous = true;
+  recognition.interimResults = false;
+  recognition.lang = 'en-US';
+  let active = false;
+  function setActive(on) {
+    active = on;
+    const icon = btn.querySelector('i');
+    if (icon) icon.className = on ? 'bi bi-mic-mute-fill' : 'bi bi-mic-fill';
+    btn.classList.toggle('active', on);
+  }
+  function smoothScrollTo(sel) {
+    const el = document.querySelector(sel);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  function openSocial(label) {
+    const link = document.querySelector(`.social-links a[aria-label="${label}"]`);
+    if (link) link.click();
+  }
+  function setTheme(mode) {
+    const isLight = mode === 'light';
+    if (isLight && !body.classList.contains('light')) themeToggle.click();
+    if (!isLight && body.classList.contains('light')) themeToggle.click();
+  }
+  function filterProjects(kind) {
+    const btn = document.querySelector(`.filter-btn[data-filter="${kind}"]`);
+    if (btn) btn.click();
+  }
+  function handleVoiceCommand(cmd) {
+    const c = cmd.toLowerCase();
+    const secMatch = c.match(/(go to|navigate to|open|show) (home|about|skills|education|certifications|projects|portfolio|experience|achievements|contact)/);
+    if (secMatch) {
+      const map = { home: '#home', about: '#about', skills: '#skills', education: '#education', certifications: '#certifications', projects: '#portfolio', portfolio: '#portfolio', experience: '#achievements', achievements: '#achievements', contact: '#contact' };
+      smoothScrollTo(map[secMatch[2]]);
+      return;
+    }
+    if (c.includes('scroll down')) {
+      window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
+      return;
+    }
+    if (c.includes('scroll up')) {
+      window.scrollBy({ top: -window.innerHeight * 0.8, behavior: 'smooth' });
+      return;
+    }
+    if (c.includes('top')) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    if (c.includes('bottom')) {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+      return;
+    }
+    if (c.includes('toggle theme') || c.includes('switch theme') || c.includes('change theme')) {
+      themeToggle.click();
+      return;
+    }
+    if (c.includes('dark mode')) {
+      setTheme('dark');
+      return;
+    }
+    if (c.includes('light mode')) {
+      setTheme('light');
+      return;
+    }
+    if (c.includes('open github')) {
+      openSocial('GitHub');
+      return;
+    }
+    if (c.includes('open linkedin')) {
+      openSocial('LinkedIn');
+      return;
+    }
+    if (c.includes('open codechef')) {
+      openSocial('CodeChef');
+      return;
+    }
+    if (c.includes('open hackerrank')) {
+      openSocial('HackerRank');
+      return;
+    }
+    if (c.includes('open instagram')) {
+      openSocial('Instagram');
+      return;
+    }
+    if (c.includes('open whatsapp')) {
+      openSocial('WhatsApp');
+      return;
+    }
+    if (c.includes('open resume') || c.includes('download resume')) {
+      const link = document.querySelector('a[href="RESUME.docx"]');
+      if (link) link.click();
+      return;
+    }
+    if (c.includes('open image') || c.includes('open photo') || c.includes('show photo') || c.includes('show image')) {
+      openModal && openModal('mypic.jpg');
+      return;
+    }
+    if (c.includes('close image') || c.includes('close photo') || c.includes('close')) {
+      closeModal && closeModal();
+      return;
+    }
+    const projMatch = c.match(/(filter|show) (all|web|security|research)/);
+    if (projMatch) {
+      const kind = projMatch[2] === 'all' ? 'all' : projMatch[2];
+      filterProjects(kind);
+      return;
+    }
+  }
+  btn.addEventListener('click', () => {
+    if (!active) {
+      try {
+        recognition.start();
+        setActive(true);
+      } catch (e) {}
+    } else {
+      try {
+        recognition.stop();
+      } finally {
+        setActive(false);
+      }
+    }
+  });
+  recognition.addEventListener('result', e => {
+    const r = e.results[e.results.length - 1][0].transcript.trim();
+    handleVoiceCommand(r);
+  });
+  recognition.addEventListener('end', () => {
+    if (active) {
+      try {
+        recognition.start();
+      } catch (e) {}
+    }
+  });
+}
+
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
   initTheme();
@@ -235,4 +378,5 @@ document.addEventListener('DOMContentLoaded', () => {
       loop: true
     });
   }
+  initVoiceControl();
 });
