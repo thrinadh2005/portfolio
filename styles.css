@@ -841,6 +841,86 @@ section.show {
   cursor: pointer;
 }
 
+/* ================= ACCESSIBILITY ================= */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.skip-link:focus {
+  left: 20px;
+  top: 20px;
+  width: auto;
+  height: auto;
+  padding: 10px 16px;
+  background: var(--gradient-main);
+  color: #000;
+  border-radius: 8px;
+  z-index: 3000;
+}
+
+/* ================= COMMAND PALETTE ================= */
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+  z-index: 3000;
+}
+
+.cmdk-overlay.show {
+  display: flex;
+}
+
+.cmdk {
+  width: min(680px, 92vw);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.cmdk-input {
+  width: 100%;
+  padding: 18px 20px;
+  font-size: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: none;
+  color: var(--text);
+  outline: none;
+}
+
+.cmdk-list {
+  max-height: 50vh;
+  overflow: auto;
+  padding: 8px;
+}
+
+.cmdk-item {
+  padding: 12px 14px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--text);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.cmdk-item:hover,
+.cmdk-item.active {
+  background: var(--nav-hover-bg);
+}
+
 /* ================= RESPONSIVE TWEAKS ================= */
 @media (max-width: 992px) {
   .navbar {

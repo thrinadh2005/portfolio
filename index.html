@@ -7,6 +7,12 @@
   <title>Adabala Venkata Thrinadh | Portfolio</title>
   <meta name="description"
     content="Personal Portfolio of Adabala Venkata Thrinadh - CSE Student & Cybersecurity Enthusiast">
+  <meta name="theme-color" content="#0f172a">
+  <meta property="og:title" content="Adabala Venkata Thrinadh | Portfolio">
+  <meta property="og:description" content="CSE Student & Cybersecurity Enthusiast — projects, skills, and achievements">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="mypic.jpg">
+  <meta property="og:url" content="https://thrinadh.vercel.app/">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -25,6 +31,7 @@
 </head>
 
 <body>
+  <a href="#main" class="skip-link">Skip to content</a>
 
 
 
@@ -119,7 +126,7 @@
         <div class="row align-items-center gy-5">
           <div class="col-lg-5 px-lg-5">
             <div class="about-image">
-              <img src="mypic.jpg" alt="Thrinadh About" class="img-fluid" onclick="openModal('mypic.jpg')">
+              <img src="mypic.jpg" alt="Thrinadh About" class="img-fluid" loading="lazy" onclick="openModal('mypic.jpg')">
             </div>
           </div>
           <div class="col-lg-7">
@@ -520,6 +527,12 @@
   <div id="imageModal" class="modal">
     <span class="close" onclick="closeModal()">&times;</span>
     <img class="modal-content" id="modalImage" alt="Profile Full">
+  </div>
+  <div id="cmdkOverlay" class="cmdk-overlay" aria-hidden="true">
+    <div class="cmdk" role="dialog" aria-modal="true" aria-label="Command palette">
+      <input id="cmdkInput" class="cmdk-input" type="text" placeholder="Type a command or search…" autocomplete="off" />
+      <div id="cmdkList" class="cmdk-list"></div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
