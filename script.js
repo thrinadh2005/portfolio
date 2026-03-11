@@ -305,6 +305,37 @@ function initVoiceControl() {
   }
   function handleVoiceCommand(cmd) {
     const c = cmd.toLowerCase();
+    
+    // Portfolio explanation commands
+    if (c.includes('tell me about thrinadh') || c.includes('who is thrinadh') || c.includes('about thrinadh')) {
+      explainThrinadh();
+      return;
+    }
+    if (c.includes('tell me about portfolio') || c.includes('explain portfolio') || c.includes('portfolio overview')) {
+      explainPortfolioOverview();
+      return;
+    }
+    if (c.includes('show projects') || c.includes('tell me about projects') || c.includes('explain projects')) {
+      explainProjects();
+      return;
+    }
+    if (c.includes('show skills') || c.includes('tell me about skills') || c.includes('explain skills')) {
+      explainSkills();
+      return;
+    }
+    if (c.includes('show education') || c.includes('tell me about education') || c.includes('explain education')) {
+      explainEducation();
+      return;
+    }
+    if (c.includes('show achievements') || c.includes('tell me about achievements') || c.includes('explain achievements')) {
+      explainAchievements();
+      return;
+    }
+    if (c.includes('show certifications') || c.includes('tell me about certifications') || c.includes('explain certifications')) {
+      explainCertifications();
+      return;
+    }
+    
     const secMatch = c.match(/(go to|navigate to|open|show) (home|about|skills|education|certifications|projects|portfolio|experience|achievements|contact)/);
     if (secMatch) {
       const map = { home: '#home', about: '#about', skills: '#skills', education: '#education', certifications: '#certifications', projects: '#portfolio', portfolio: '#portfolio', experience: '#achievements', achievements: '#achievements', contact: '#contact' };
@@ -407,16 +438,72 @@ function initVoiceControl() {
       if (!ok) speak('Could not find project ' + name);
       return;
     }
-    if (c.includes('read section') || c.includes('read this section')) {
+    if (c.includes('tell me more') || c.includes('more details') || c.includes('explain more')) {
       const current = [...sections].find(s => {
         const rect = s.getBoundingClientRect();
         return rect.top >= 0 && rect.top < window.innerHeight / 2;
       });
-      if (current) readSection('#' + current.id);
+      if (current) {
+        const id = '#' + current.id;
+        switch(current.id) {
+          case 'about': explainThrinadh(); break;
+          case 'skills': explainSkills(); break;
+          case 'education': explainEducation(); break;
+          case 'certifications': explainCertifications(); break;
+          case 'portfolio': explainProjects(); break;
+          case 'achievements': explainAchievements(); break;
+          default: speak('No more details available for this section');
+        }
+      }
+      return;
+    }
+    if (c.includes('what are your skills') || c.includes('list your skills')) {
+      explainSkills();
+      return;
+    }
+    if (c.includes('what projects have you done') || c.includes('your projects')) {
+      explainProjects();
+      return;
+    }
+    if (c.includes('your education') || c.includes('where did you study')) {
+      explainEducation();
+      return;
+    }
+    if (c.includes('your achievements') || c.includes('what have you achieved')) {
+      explainAchievements();
+      return;
+    }
+    if (c.includes('your certifications') || c.includes('what certifications do you have')) {
+      explainCertifications();
+      return;
+    }
+    if (c.includes('contact information') || c.includes('how to contact') || c.includes('contact details')) {
+      smoothScrollTo('#contact');
+      highlightSection('#contact');
+      speak('You can contact Thrinadh via email at thrinadh2005@gmail.com. He is located in Rajahmundry, Andhra Pradesh. You can also reach out through social media links like GitHub, LinkedIn, or WhatsApp.');
+      return;
+    }
+    if (c.includes('resume') || c.includes('download resume')) {
+      const link = document.querySelector('a[href="RESUME.docx"]');
+      if (link) link.click();
+      speak('Opening resume for download');
+      return;
+    }
+    if (c.includes('social media') || c.includes('social links') || c.includes('social profiles')) {
+      smoothScrollTo('#home');
+      speak('Thrinadh is active on GitHub, LinkedIn, CodeChef, HackerRank, Instagram, and WhatsApp. You can find these links in the home section.');
+      return;
+    }
+    if (c.includes('stop highlighting') || c.includes('remove highlight')) {
+      document.querySelectorAll('section').forEach(section => {
+        section.style.boxShadow = '';
+        section.style.transform = '';
+      });
+      speak('Highlights removed');
       return;
     }
     if (c.includes('help') || c.includes('what can you do')) {
-      speak('You can navigate sections, scroll, change theme, open social links, open projects by name, filter projects, open resume, and read sections. Say, open project Dictionary.');
+      speak('You can navigate sections, scroll, change theme, open social links, open projects by name, filter projects, open resume, read sections, and ask me to explain Thrinadh\'s portfolio. Say, tell me about Thrinadh.');
       return;
     }
     if (c.includes('command palette') || c.includes('search')) {
@@ -462,6 +549,83 @@ function initVoiceControl() {
       } catch (e) {}
     }
   });
+}
+
+// Portfolio explanation functions
+function explainThrinadh() {
+  const text = `Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology. He's passionate about cybersecurity and ethical hacking, combining secure coding practices with understanding vulnerabilities. Thrinadh maintains an excellent academic record with a 9.4 CGPA and is actively involved in hackathons, competitive programming, and community service through NSS. He's skilled in Python, Java, C programming, web technologies, and cybersecurity fundamentals.`;
+  
+  smoothScrollTo('#about');
+  highlightSection('#about');
+  speak(text);
+}
+
+function explainPortfolioOverview() {
+  const text = `This portfolio showcases Thrinadh's journey as a Computer Science student and cybersecurity enthusiast. It includes his educational background, technical skills, academic projects, certifications from platforms like Infosys Springboard and L&T LearnConnect, and achievements in competitive programming and hackathons. The portfolio demonstrates his expertise in web development, security tools, and problem-solving abilities.`;
+  
+  speak(text);
+}
+
+function explainProjects() {
+  smoothScrollTo('#portfolio');
+  highlightSection('#portfolio');
+  
+  const projects = [
+    'Farmer Marketplace - A full-stack platform connecting local farmers and plant buyers, built with React, Node.js, and MongoDB.',
+    'Results System - An automated academic management system for calculating CGPA and generating reports using Python and MySQL.',
+    'SecurePass - A security tool featuring password strength checking and text encryption using Python and cryptography.',
+    'Dictionary - A full-stack dictionary app with word definitions and user authentication built with React.',
+    'Personal Portfolio - This high-performance portfolio website with glassmorphism design using HTML5, CSS3, and JavaScript.'
+  ];
+  
+  const text = `Thrinadh has worked on five main projects: ${projects.join('. ')}. These projects demonstrate his skills in full-stack development, security tools, and modern web technologies.`;
+  speak(text);
+}
+
+function explainSkills() {
+  smoothScrollTo('#skills');
+  highlightSection('#skills');
+  
+  const text = `Thrinadh has a diverse skill set including programming languages like Python, Java, and C. He's strong in computer science fundamentals including data structures, algorithms, database management, and object-oriented programming. His technical skills include Git and GitHub, web technologies, problem-solving, and cybersecurity. He bridges the gap between theoretical computer science and modern development practices.`;
+  speak(text);
+}
+
+function explainEducation() {
+  smoothScrollTo('#education');
+  highlightSection('#education');
+  
+  const text = `Thrinadh is currently pursuing his B.Tech in Computer Science and Engineering at GMR Institute of Technology with an impressive 9.4 CGPA. He completed his intermediate education with a 9.76 GPA and scored 92.3% in his secondary school. His excellent academic performance reflects his dedication to learning and excellence in computer science.`;
+  speak(text);
+}
+
+function explainAchievements() {
+  smoothScrollTo('#achievements');
+  highlightSection('#achievements');
+  
+  const text = `Thrinadh has several notable achievements including serving as Event Coordinator for STEPCONE, a national-level tech fest. He's an active NSS volunteer dedicated to community service. He competes in overnight hackathons, demonstrating his ability to build innovative solutions under pressure. He's also a problem-solving expert with consistent rankings on competitive programming platforms like HackerRank and CodeChef.`;
+  speak(text);
+}
+
+function explainCertifications() {
+  smoothScrollTo('#certifications');
+  highlightSection('#certifications');
+  
+  const text = `Thrinadh has earned certifications from multiple platforms. From Infosys Springboard, he completed courses in Introduction to Cyber Security, Cybersecurity Fundamentals, and Basics of Python. From L&T LearnConnect, he earned certifications in Python Challenge Series, Web Development Fundamentals, and Ethical Hacking Gateway. He also has NPTEL certifications in Operating System Fundamentals and various programming certifications from HackerRank.`;
+  speak(text);
+}
+
+function highlightSection(selector) {
+  const element = document.querySelector(selector);
+  if (!element) return;
+  
+  element.style.transition = 'all 0.3s ease';
+  element.style.boxShadow = '0 0 30px rgba(59, 130, 246, 0.5)';
+  element.style.transform = 'scale(1.02)';
+  
+  setTimeout(() => {
+    element.style.boxShadow = '';
+    element.style.transform = '';
+  }, 3000);
 }
 
 function initCommandPalette() {
