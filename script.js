@@ -220,88 +220,240 @@ if (contactForm) {
 function initVoiceControl() {
   const btn = document.getElementById('voiceToggle');
   const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!btn || !Recognition) {
-    if (btn) btn.style.display = 'none';
+  
+  // Enhanced browser compatibility check
+  if (!Recognition) {
+    console.warn('Speech Recognition not supported in this browser');
+    if (btn) {
+      btn.style.display = 'none';
+      btn.title = 'Voice control not supported in this browser';
+    }
     return;
   }
+  
+  if (!btn) {
+    console.error('Voice toggle button not found');
+    return;
+  }
+  
   const recognition = new Recognition();
   recognition.continuous = true;
   recognition.interimResults = false;
   recognition.lang = 'en-US';
+  recognition.maxAlternatives = 1;
+  
   let active = false;
+  let isListening = false;
   const synth = window.speechSynthesis;
   let tts = true;
+  
+  // Load TTS preference
   try {
     const saved = localStorage.getItem('voice_tts');
     if (saved !== null) tts = JSON.parse(saved);
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Failed to load TTS preference:', e);
+  }
+  
+  // Enhanced speak function with visual feedback
   function speak(text) {
     if (!tts || !synth || !text) return;
+    
     try {
-      const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'en-US';
+      // Cancel any ongoing speech
       synth.cancel();
-      synth.speak(u);
-    } catch (e) {}
+      
+      // Show visual feedback
+      showVoiceFeedback('Speaking...');
+      
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.9; // Slightly slower for better clarity
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+      
+      // Add event listeners for better debugging
+      utterance.onstart = () => {
+        console.log('Speech started');
+        showVoiceFeedback('Speaking...');
+      };
+      
+      utterance.onend = () => {
+        console.log('Speech ended');
+        hideVoiceFeedback();
+      };
+      
+      utterance.onerror = (event) => {
+        console.error('Speech error:', event.error);
+        hideVoiceFeedback();
+      };
+      
+      synth.speak(utterance);
+    } catch (e) {
+      console.error('Speech synthesis error:', e);
+      hideVoiceFeedback();
+    }
   }
+  
+  // Visual feedback functions
+  function showVoiceFeedback(message) {
+    let feedback = document.querySelector('.voice-feedback');
+    if (!feedback) {
+      feedback = document.createElement('div');
+      feedback.className = 'voice-feedback';
+      document.body.appendChild(feedback);
+    }
+    
+    feedback.textContent = message;
+    feedback.classList.add('show');
+  }
+  
+  function hideVoiceFeedback() {
+    const feedback = document.querySelector('.voice-feedback');
+    if (feedback) {
+      setTimeout(() => {
+        feedback.classList.remove('show');
+      }, 500);
+    }
+  }
+  
+  // Enhanced UI feedback
   function setActive(on) {
     active = on;
+    isListening = on;
     const icon = btn.querySelector('i');
-    if (icon) icon.className = on ? 'bi bi-mic-mute-fill' : 'bi bi-mic-fill';
+    if (icon) {
+      icon.className = on ? 'bi bi-mic-mute-fill' : 'bi bi-mic-fill';
+    }
     btn.classList.toggle('active', on);
+    btn.style.background = on ? 'var(--gradient-main)' : '';
+    btn.title = on ? 'Voice control active - Click to stop' : 'Click to start voice control';
   }
-  function smoothScrollTo(sel) {
-    const el = document.querySelector(sel);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  
+  // Enhanced smooth scroll with better error handling
+  function smoothScrollTo(selector) {
+    try {
+      const element = document.querySelector(selector);
+      if (element) {
+        element.scrollIntoView({ 
+          behavior: 'smooth', 
+          block: 'start',
+          inline: 'nearest'
+        });
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.error('Scroll error:', e);
+      return false;
+    }
   }
+  
   function openSocial(label) {
-    const link = document.querySelector(`.social-links a[aria-label="${label}"]`);
-    if (link) link.click();
+    try {
+      const link = document.querySelector(`.social-links a[aria-label="${label}"]`);
+      if (link) {
+        link.click();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.error('Social link error:', e);
+      return false;
+    }
   }
+  
   function setTheme(mode) {
-    const isLight = mode === 'light';
-    if (isLight && !body.classList.contains('light')) themeToggle.click();
-    if (!isLight && body.classList.contains('light')) themeToggle.click();
+    try {
+      const isLight = mode === 'light';
+      if (isLight && !body.classList.contains('light')) {
+        themeToggle.click();
+      } else if (!isLight && body.classList.contains('light')) {
+        themeToggle.click();
+      }
+      return true;
+    } catch (e) {
+      console.error('Theme error:', e);
+      return false;
+    }
   }
+  
   function filterProjects(kind) {
-    const btn = document.querySelector(`.filter-btn[data-filter="${kind}"]`);
-    if (btn) btn.click();
+    try {
+      const button = document.querySelector(`.filter-btn[data-filter="${kind}"]`);
+      if (button) {
+        button.click();
+        return true;
+      }
+      return false;
+    } catch (e) {
+      console.error('Filter error:', e);
+      return false;
+    }
   }
   function norm(s) {
     return (s || '').toLowerCase().replace(/\s+/g, ' ').trim().replace(/[^a-z0-9]/g, '');
   }
   function getProjectMap() {
     const map = {};
-    document.querySelectorAll('#portfolio .project-card').forEach(card => {
-      const t = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
-      const a = card.querySelector('.ext-link');
-      const href = a ? a.getAttribute('href') : '';
-      if (t && href) map[norm(t)] = href;
+    // Update selector for 3D carousel
+    document.querySelectorAll('.project-card-3d').forEach(card => {
+      const titleElement = card.querySelector('h3');
+      const linkElement = card.querySelector('.btn-primary');
+      
+      if (titleElement && linkElement) {
+        const title = titleElement.textContent.trim();
+        const href = linkElement.getAttribute('href');
+        if (title && href) {
+          map[norm(title)] = href;
+        }
+      }
     });
     return map;
   }
+  
   function openProjectByName(name) {
     const projects = getProjectMap();
     const key = norm(name);
+    
     if (projects[key]) {
       window.open(projects[key], '_blank', 'noopener,noreferrer');
       speak('Opening ' + name);
       return true;
     }
+    
+    // Try fuzzy matching
     const keys = Object.keys(projects);
-    const match = keys.find(k => key && k.includes(key));
+    const match = keys.find(k => k.includes(key) || key.includes(k));
+    
     if (match) {
       window.open(projects[match], '_blank', 'noopener,noreferrer');
       speak('Opening ' + name);
       return true;
     }
+    
+    speak('Could not find project ' + name);
     return false;
   }
+  
   function readSection(id) {
-    const el = document.querySelector(id);
-    if (!el) return;
-    const text = el.innerText || '';
-    speak(text.slice(0, 400));
+    try {
+      const element = document.querySelector(id);
+      if (!element) {
+        speak('Section not found');
+        return;
+      }
+      
+      const text = element.innerText || '';
+      if (text.length > 0) {
+        speak(text.slice(0, 400));
+      } else {
+        speak('No content to read in this section');
+      }
+    } catch (e) {
+      console.error('Read section error:', e);
+      speak('Error reading section');
+    }
   }
   function handleVoiceCommand(cmd) {
     const c = cmd.toLowerCase();
@@ -522,33 +674,159 @@ function initVoiceControl() {
       return;
     }
   }
+  // Enhanced button click handler with better error handling
   btn.addEventListener('click', () => {
-    if (!active) {
-      try {
-        recognition.start();
-        setActive(true);
-        speak('Listening');
-      } catch (e) {}
-    } else {
-      try {
-        speak('Stopping');
+    try {
+      if (!active) {
+        // Check for microphone permissions first
+        if (navigator.permissions) {
+          navigator.permissions.query({ name: 'microphone' }).then((result) => {
+            if (result.state === 'denied') {
+              speak('Microphone permission denied. Please allow microphone access in your browser settings.');
+              return;
+            }
+            startVoiceRecognition();
+          }).catch(() => {
+            // Permissions API not supported, proceed anyway
+            startVoiceRecognition();
+          });
+        } else {
+          // Permissions API not supported, proceed anyway
+          startVoiceRecognition();
+        }
+      } else {
+        // Stop listening
+        speak('Voice control deactivated');
         recognition.stop();
-      } finally {
+        setActive(false);
+        console.log('Voice recognition stopped');
+      }
+    } catch (e) {
+      console.error('Voice control toggle error:', e);
+      speak('Voice control error. Please try again.');
+      setActive(false);
+    }
+  });
+  
+  function startVoiceRecognition() {
+    try {
+      recognition.start();
+      setActive(true);
+      showVoiceFeedback('Listening...');
+      speak('Voice control activated. I\'m listening for your commands.');
+      console.log('Voice recognition started');
+    } catch (e) {
+      console.error('Failed to start recognition:', e);
+      if (e.name === 'NotAllowedError') {
+        speak('Microphone access denied. Please allow microphone access and try again.');
+      } else {
+        speak('Failed to start voice recognition. Please try again.');
+      }
+      setActive(false);
+    }
+  }
+  
+  // Enhanced recognition event handlers
+  recognition.addEventListener('result', (event) => {
+    try {
+      const result = event.results[event.results.length - 1];
+      if (result && result[0]) {
+        const transcript = result[0].transcript.trim();
+        const confidence = result[0].confidence || 0;
+        
+        console.log('Voice recognized:', transcript, 'Confidence:', confidence);
+        showVoiceFeedback(`"${transcript}"`);
+        
+        // Only process if confidence is reasonable
+        if (confidence > 0.5) {
+          setTimeout(() => {
+            handleVoiceCommand(transcript);
+          }, 500);
+        } else {
+          console.log('Low confidence, ignoring:', transcript);
+          showVoiceFeedback('Didn\'t catch that. Please speak clearly.');
+          setTimeout(hideVoiceFeedback, 2000);
+        }
+      }
+    } catch (e) {
+      console.error('Recognition result error:', e);
+    }
+  });
+  
+  recognition.addEventListener('error', (event) => {
+    console.error('Recognition error:', event.error);
+    
+    switch (event.error) {
+      case 'no-speech':
+        console.log('No speech detected');
+        showVoiceFeedback('No speech detected');
+        setTimeout(hideVoiceFeedback, 2000);
+        break;
+      case 'audio-capture':
+        console.error('Microphone not available');
+        showVoiceFeedback('Microphone not available');
+        speak('Microphone not available. Please check your permissions.');
+        setActive(false);
+        break;
+      case 'not-allowed':
+        console.error('Microphone permission denied');
+        showVoiceFeedback('Microphone permission denied');
+        speak('Microphone permission denied. Please allow microphone access.');
+        setActive(false);
+        break;
+      case 'network':
+        console.error('Network error');
+        showVoiceFeedback('Network error');
+        speak('Network error. Please check your internet connection.');
+        setActive(false);
+        break;
+      case 'service-not-allowed':
+        console.error('Service not allowed');
+        showVoiceFeedback('Voice service not allowed');
+        speak('Voice recognition service not allowed. Please check browser settings.');
+        setActive(false);
+        break;
+      default:
+        console.error('Unknown recognition error:', event.error);
+        showVoiceFeedback('Voice recognition error');
+        speak('Voice recognition error. Please try again.');
+        setActive(false);
+    }
+  });
+  
+  recognition.addEventListener('start', () => {
+    console.log('Recognition started');
+    isListening = true;
+    showVoiceFeedback('Listening...');
+  });
+  
+  recognition.addEventListener('end', () => {
+    console.log('Recognition ended');
+    isListening = false;
+    
+    // Restart if still active
+    if (active) {
+      try {
+        setTimeout(() => {
+          if (active && !isListening) {
+            recognition.start();
+          }
+        }, 100);
+      } catch (e) {
+        console.error('Restart recognition error:', e);
         setActive(false);
       }
     }
   });
-  recognition.addEventListener('result', e => {
-    const r = e.results[e.results.length - 1][0].transcript.trim();
-    handleVoiceCommand(r);
-  });
-  recognition.addEventListener('end', () => {
-    if (active) {
-      try {
-        recognition.start();
-      } catch (e) {}
-    }
-  });
+  
+  // Check for HTTPS requirement
+  if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+    console.warn('Voice recognition requires HTTPS in most browsers');
+    btn.title = 'Voice control requires HTTPS - Some features may not work';
+    btn.style.opacity = '0.7';
+  }
+  
+  console.log('Voice control initialized successfully');
 }
 
 // Portfolio explanation functions
@@ -626,6 +904,207 @@ function highlightSection(selector) {
     element.style.boxShadow = '';
     element.style.transform = '';
   }, 3000);
+}
+
+// 3D Carousel Functionality
+function init3DCarousel() {
+  const carousel = document.getElementById('projectCarousel');
+  if (!carousel) return;
+  
+  const items = carousel.querySelectorAll('.carousel-item');
+  const prevBtn = document.getElementById('carouselPrev');
+  const nextBtn = document.getElementById('carouselNext');
+  const indicators = carousel.parentElement.querySelectorAll('.indicator');
+  
+  let currentIndex = 0;
+  const totalItems = items.length;
+  
+  function updateCarousel() {
+    items.forEach((item, index) => {
+      item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
+      
+      const diff = index - currentIndex;
+      if (diff === 0 || diff === totalItems || diff === -totalItems) {
+        item.classList.add('active');
+      } else if (diff === 1 || diff === -totalItems + 1) {
+        item.classList.add('next');
+      } else if (diff === -1 || diff === totalItems - 1) {
+        item.classList.add('prev');
+      } else if (diff === 2 || diff === -totalItems + 2) {
+        item.classList.add('far-next');
+      } else if (diff === -2 || diff === totalItems - 2) {
+        item.classList.add('far-prev');
+      }
+    });
+    
+    indicators.forEach((indicator, index) => {
+      indicator.classList.toggle('active', index === currentIndex);
+    });
+  }
+  
+  function nextSlide() {
+    currentIndex = (currentIndex + 1) % totalItems;
+    updateCarousel();
+  }
+  
+  function prevSlide() {
+    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+    updateCarousel();
+  }
+  
+  function goToSlide(index) {
+    currentIndex = index;
+    updateCarousel();
+  }
+  
+  prevBtn?.addEventListener('click', prevSlide);
+  nextBtn?.addEventListener('click', nextSlide);
+  
+  indicators.forEach((indicator, index) => {
+    indicator.addEventListener('click', () => goToSlide(index));
+  });
+  
+  // Auto-rotate carousel
+  let autoRotateInterval = setInterval(nextSlide, 5000);
+  
+  carousel.addEventListener('mouseenter', () => {
+    clearInterval(autoRotateInterval);
+  });
+  
+  carousel.addEventListener('mouseleave', () => {
+    autoRotateInterval = setInterval(nextSlide, 5000);
+  });
+  
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') prevSlide();
+    if (e.key === 'ArrowRight') nextSlide();
+  });
+  
+  updateCarousel();
+}
+
+// Touch Gestures for Mobile
+function initTouchGestures() {
+  const carousel = document.getElementById('projectCarousel');
+  if (!carousel || !window.Hammer) return;
+  
+  const hammer = new Hammer(carousel);
+  hammer.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
+  
+  hammer.on('swipeleft', () => {
+    const nextBtn = document.getElementById('carouselNext');
+    nextBtn?.click();
+  });
+  
+  hammer.on('swiperight', () => {
+    const prevBtn = document.getElementById('carouselPrev');
+    prevBtn?.click();
+  });
+  
+  // Haptic feedback on mobile
+  if ('vibrate' in navigator) {
+    carousel.addEventListener('click', () => {
+      navigator.vibrate(10);
+    });
+  }
+}
+
+// Parallax Scrolling
+function initParallax() {
+  const parallaxElements = document.querySelectorAll('.parallax-layer');
+  
+  function updateParallax() {
+    const scrolled = window.pageYOffset;
+    
+    parallaxElements.forEach(element => {
+      const speed = element.dataset.speed || 0.5;
+      const yPos = -(scrolled * speed);
+      element.style.transform = `translateY(${yPos}px)`;
+    });
+  }
+  
+  window.addEventListener('scroll', updateParallax);
+  updateParallax();
+}
+
+// 3D Elements and Animations
+function init3DElements() {
+  // Add 3D floating animation to hero text
+  const heroTitle = document.querySelector('h1');
+  if (heroTitle) {
+    heroTitle.classList.add('animate-float');
+  }
+  
+  // 3D card tilt effects
+  const cards3d = document.querySelectorAll('.project-card-3d');
+  
+  cards3d.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+      
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+      
+      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
+    });
+    
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = '';
+    });
+  });
+  
+  // Add parallax layers to background
+  const bgBlobs = document.querySelector('.bg-blobs');
+  if (bgBlobs) {
+    bgBlobs.classList.add('parallax-container');
+    
+    const blobs = bgBlobs.querySelectorAll('.blob');
+    blobs.forEach((blob, index) => {
+      blob.classList.add('parallax-layer');
+      blob.dataset.speed = 0.1 + (index * 0.05);
+    });
+  }
+}
+
+// Project Demo Functions
+function openProjectDemo(projectId) {
+  // This would open a modal or new window with project demo
+  const demoUrls = {
+    'farmer-marketplace': 'https://farmer-plant-marketplace.vercel.app',
+    'results-system': '#',
+    'securepass': 'https://secure-pass-coral.vercel.app',
+    'dictionary': 'https://dictionary-f4nc.onrender.com',
+    'portfolio': 'https://thrinadh.vercel.app'
+  };
+  
+  const url = demoUrls[projectId];
+  if (url && url !== '#') {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  } else {
+    alert('Demo coming soon!');
+  }
+}
+
+function showProjectDetails(projectId) {
+  // This would show a modal with detailed project information
+  const projectDetails = {
+    'farmer-marketplace': 'A comprehensive platform connecting farmers directly with buyers, featuring real-time inventory management, secure payment processing, and advanced search capabilities.',
+    'results-system': 'An automated academic management system that handles student data, calculates CGPA, generates reports, and provides analytics for educational institutions.',
+    'securepass': 'A comprehensive security toolkit featuring password strength analysis, secure password generation, and text encryption using industry-standard algorithms.',
+    'dictionary': 'A feature-rich dictionary application with word definitions, pronunciations, examples, and user authentication for personalized features.',
+    'portfolio': 'A cutting-edge portfolio website showcasing advanced web development techniques including 3D animations, voice control, and responsive design.'
+  };
+  
+  const details = projectDetails[projectId];
+  if (details) {
+    alert(details);
+  }
 }
 
 function initCommandPalette() {
@@ -743,4 +1222,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initVoiceControl();
   initCommandPalette();
+  init3DCarousel();
+  initTouchGestures();
+  initParallax();
+  init3DElements();
 });

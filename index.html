@@ -28,6 +28,7 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-3d.css">
 </head>
 
 <body>
@@ -314,83 +315,250 @@
           </div>
 
           <div class="row g-4">
-            <!-- Project 1 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-shop"></i></div>
-                  <a href="https://farmer-plant-marketplace.vercel.app" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Farmer Marketplace in new tab"><i class="bi bi-box-arrow-up-right"></i></a>
-                </div>
-                <h3>Farmer Marketplace</h3>
-                <p>A full-stack platform connecting local farmers and plant buyers with discovery features.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>React</span>
-                  <span>Node.js</span>
-                  <span>MongoDB</span>
-                </div>
-              </div>
-            </div>
+            <!-- 3D Carousel Container -->
+            <div class="col-12">
+              <div class="carousel-3d-container">
+                <div class="carousel-3d" id="projectCarousel">
+                  <!-- Project 1 -->
+                  <div class="carousel-item active" data-project="0">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/4facfe/ffffff?text=Farmer+Marketplace" alt="Farmer Marketplace Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('farmer-marketplace')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">4.8</span>
+                            <span class="stat-label">Rating</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Farmer Marketplace</h3>
+                        <p>A full-stack platform connecting local farmers and plant buyers with discovery features.</p>
+                        <div class="tech-stack">
+                          <span>React</span>
+                          <span>Node.js</span>
+                          <span>MongoDB</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://farmer-plant-marketplace.vercel.app" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('farmer-marketplace')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <!-- Project 2 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="research">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-clipboard-data"></i></div>
-                  <a href="#" class="ext-link" aria-label="View project repository on GitHub"><i class="bi bi-github"></i></a>
-                </div>
-                <h3>Results System</h3>
-                <p>Automated academic management system for calculating CGPA and generating reports.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>Python</span>
-                  <span>MySQL</span>
-                  <span>Pandas</span>
-                </div>
-              </div>
-            </div>
+                  <!-- Project 2 -->
+                  <div class="carousel-item" data-project="1">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00d2b4/ffffff?text=Results+System" alt="Results System Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('results-system')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Students</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Accuracy</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Results System</h3>
+                        <p>Automated academic management system for calculating CGPA and generating reports.</p>
+                        <div class="tech-stack">
+                          <span>Python</span>
+                          <span>MySQL</span>
+                          <span>Pandas</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="#" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('results-system')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <!-- Project 3 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="security">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-key"></i></div>
-                  <a href="https://secure-pass-coral.vercel.app/" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open SecurePass in new tab"><i class="bi bi-github"></i></a>
-                </div>
-                <h3>SecurePass</h3>
-                <p>A security tool featuring password strength checking and text encryption tools.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>Python</span>
-                  <span>Cryptography</span>
-                </div>
-              </div>
-            </div>
+                  <!-- Project 3 -->
+                  <div class="carousel-item" data-project="2">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00f2fe/ffffff?text=SecurePass" alt="SecurePass Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('securepass')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">1K+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">256-bit</span>
+                            <span class="stat-label">Encryption</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>SecurePass</h3>
+                        <p>A security tool featuring password strength checking and text encryption tools.</p>
+                        <div class="tech-stack">
+                          <span>Python</span>
+                          <span>Cryptography</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://secure-pass-coral.vercel.app/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('securepass')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-          
-             <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-book"></i></div>
-                  <a href="https://dictionary-f4nc.onrender.com/" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Dictionary project in new tab"><i class="bi bi-box-arrow-up-right"></i></a>
+                  <!-- Project 4 -->
+                  <div class="carousel-item" data-project="3">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/4facfe/ffffff?text=Dictionary" alt="Dictionary Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('dictionary')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Words</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">1</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Dictionary</h3>
+                        <p>A full-stack dictionary app with word definitions, user authentication, and a responsive UI.</p>
+                        <div class="tech-stack">
+                          <span>React</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://dictionary-f4nc.onrender.com/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('dictionary')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Project 5 -->
+                  <div class="carousel-item" data-project="4">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00d2b4/ffffff?text=Portfolio" alt="Portfolio Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('portfolio')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">3D</span>
+                            <span class="stat-label">Effects</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">60+</span>
+                            <span class="stat-label">FPS</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Personal Portfolio</h3>
+                        <p>The site you're visiting! A high-performance portfolio with glassmorphism design.</p>
+                        <div class="tech-stack">
+                          <span>HTML5</span>
+                          <span>CSS3</span>
+                          <span>JS</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://thrinadh.vercel.app/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('portfolio')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3>Dictionary</h3>
-                <p>A full-stack dictionary app with word definitions, user authentication, and a responsive UI.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>React</span>
+
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                  <button class="carousel-btn prev" id="carouselPrev">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button class="carousel-btn next" id="carouselNext">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
                 </div>
-              </div>
-            </div>
-            <!-- Project 5 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-file-code"></i></div>
-                  <a href="https://thrinadh.vercel.app/" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Personal Portfolio in new tab"><i class="bi bi-github"></i></a>
-                </div>
-                <h3>Personal Portfolio</h3>
-                <p>The site you're visiting! A high-performance portfolio with glassmorphism design.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>HTML5</span>
-                  <span>CSS3</span>
-                  <span>JS</span>
+
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
+                  <button class="indicator active" data-slide="0"></button>
+                  <button class="indicator" data-slide="1"></button>
+                  <button class="indicator" data-slide="2"></button>
+                  <button class="indicator" data-slide="3"></button>
+                  <button class="indicator" data-slide="4"></button>
                 </div>
               </div>
             </div>
@@ -536,6 +704,8 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
   <script src="script.js"></script>
 </body>
 

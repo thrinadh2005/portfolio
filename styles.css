@@ -921,7 +921,81 @@ section.show {
   background: var(--nav-hover-bg);
 }
 
-/* ================= RESPONSIVE TWEAKS ================= */
+/* Voice Control Button Styles */
+#voiceToggle {
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--text);
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+#voiceToggle:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#voiceToggle.active {
+  background: var(--gradient-main);
+  color: white;
+  animation: pulse 2s infinite;
+  box-shadow: 0 0 20px rgba(79, 172, 254, 0.5);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 20px rgba(79, 172, 254, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(79, 172, 254, 0.8); }
+  100% { box-shadow: 0 0 20px rgba(79, 172, 254, 0.5); }
+}
+
+#voiceToggle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: rgba(255, 0, 0, 0.2);
+}
+
+/* Voice feedback styles */
+.voice-feedback {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: var(--gradient-main);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-weight: 500;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+.voice-feedback.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #voiceToggle {
+    font-size: 1rem;
+    padding: 6px 10px;
+  }
+  
+  .voice-feedback {
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    text-align: center;
+  }
+}
 @media (max-width: 992px) {
   .navbar {
     width: 95%;
