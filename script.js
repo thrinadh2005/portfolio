@@ -256,42 +256,99 @@ function initVoiceControl() {
   }
   
   // Enhanced speak function with visual feedback
-  function speak(text) {
-    if (!tts || !synth || !text) return;
+  function speak(text, onEnd) {
+    if (!tts || !synth || !text) {
+      if (onEnd) onEnd();
+      return;
+    }
     
     try {
-      // Cancel any ongoing speech
       synth.cancel();
-      
-      // Show visual feedback
       showVoiceFeedback('Speaking...');
       
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = 'en-US';
-      utterance.rate = 0.9; // Slightly slower for better clarity
+      utterance.rate = 0.9;
       utterance.pitch = 1.0;
       utterance.volume = 1.0;
       
-      // Add event listeners for better debugging
       utterance.onstart = () => {
-        console.log('Speech started');
         showVoiceFeedback('Speaking...');
       };
       
       utterance.onend = () => {
-        console.log('Speech ended');
         hideVoiceFeedback();
+        if (onEnd) onEnd();
       };
       
       utterance.onerror = (event) => {
         console.error('Speech error:', event.error);
         hideVoiceFeedback();
+        if (onEnd) onEnd();
       };
       
       synth.speak(utterance);
     } catch (e) {
       console.error('Speech synthesis error:', e);
       hideVoiceFeedback();
+      if (onEnd) onEnd();
+    }
+  }
+
+  function speakPromise(text) {
+    return new Promise(resolve => speak(text, resolve));
+  }
+
+  async function startPortfolioTour() {
+    speak('Starting your personal tour of Thrinadh\'s portfolio. Sit back and enjoy!');
+    
+    const steps = [
+      { 
+        selector: '#home', 
+        action: () => { smoothScrollTo('#home'); highlightSection('#home'); },
+        text: 'We begin at the Home section. Here you can find Thrinadh\'s quick introduction as a CSE student and cybersecurity enthusiast, along with his social links and resume.'
+      },
+      { 
+        selector: '#about', 
+        action: () => { smoothScrollTo('#about'); highlightSection('#about'); },
+        text: 'Next, the About section. Thrinadh combines secure coding with ethical hacking. He maintains a high CGPA of 9.4 at GMR Institute of Technology and is passionate about solving real-world security challenges.'
+      },
+      { 
+        selector: '#skills', 
+        action: () => { smoothScrollTo('#skills'); highlightSection('#skills'); },
+        text: 'Moving to Skills. He is proficient in Python, Java, and C, with a strong foundation in data structures, algorithms, and cybersecurity fundamentals.'
+      },
+      { 
+        selector: '#portfolio', 
+        action: () => { smoothScrollTo('#portfolio'); highlightSection('#portfolio'); },
+        text: 'The Portfolio section highlights his key projects: the Farmer Marketplace, an automated Results System, the SecurePass security toolkit, and a feature-rich Dictionary app.'
+      },
+      { 
+        selector: '#education', 
+        action: () => { smoothScrollTo('#education'); highlightSection('#education'); },
+        text: 'His Education background shows consistent excellence from secondary school through his current B.Tech studies.'
+      },
+      { 
+        selector: '#achievements', 
+        action: () => { smoothScrollTo('#achievements'); highlightSection('#achievements'); },
+        text: 'In Achievements, you\'ll see his leadership as an Event Coordinator, his community service as an NSS volunteer, and his success in hackathons and competitive programming.'
+      },
+      { 
+        selector: '#certifications', 
+        action: () => { smoothScrollTo('#certifications'); highlightSection('#certifications'); },
+        text: 'Finally, his Certifications from Infosys, L&T, and NPTEL demonstrate his commitment to continuous learning in cybersecurity and web development.'
+      },
+      { 
+        selector: '#contact', 
+        action: () => { smoothScrollTo('#contact'); highlightSection('#contact'); },
+        text: 'That concludes our tour. You can reach out to Thrinadh through the contact form or social links. Thank you for visiting!'
+      }
+    ];
+
+    for (const step of steps) {
+      step.action();
+      await speakPromise(step.text);
+      await new Promise(r => setTimeout(r, 1000)); // Pause between sections
     }
   }
   
@@ -396,10 +453,9 @@ function initVoiceControl() {
   }
   function getProjectMap() {
     const map = {};
-    // Update selector for 3D carousel
-    document.querySelectorAll('.project-card-3d').forEach(card => {
+    document.querySelectorAll('#portfolio .project-card').forEach(card => {
       const titleElement = card.querySelector('h3');
-      const linkElement = card.querySelector('.btn-primary');
+      const linkElement = card.querySelector('.ext-link');
       
       if (titleElement && linkElement) {
         const title = titleElement.textContent.trim();
@@ -461,6 +517,10 @@ function initVoiceControl() {
     // Portfolio explanation commands
     if (c.includes('tell me about thrinadh') || c.includes('who is thrinadh') || c.includes('about thrinadh')) {
       explainThrinadh();
+      return;
+    }
+    if (c.includes('start tour') || c.includes('show me around') || c.includes('tell about me') || c.includes('tour portfolio') || c.includes('introduce yourself')) {
+      startPortfolioTour();
       return;
     }
     if (c.includes('tell me about portfolio') || c.includes('explain portfolio') || c.includes('portfolio overview')) {
@@ -596,7 +656,6 @@ function initVoiceControl() {
         return rect.top >= 0 && rect.top < window.innerHeight / 2;
       });
       if (current) {
-        const id = '#' + current.id;
         switch(current.id) {
           case 'about': explainThrinadh(); break;
           case 'skills': explainSkills(); break;
@@ -604,7 +663,7 @@ function initVoiceControl() {
           case 'certifications': explainCertifications(); break;
           case 'portfolio': explainProjects(); break;
           case 'achievements': explainAchievements(); break;
-          default: speak('No more details available for this section');
+          default: readSection('#' + current.id);
         }
       }
       return;
@@ -658,8 +717,22 @@ function initVoiceControl() {
       speak('You can navigate sections, scroll, change theme, open social links, open projects by name, filter projects, open resume, read sections, and ask me to explain Thrinadh\'s portfolio. Say, tell me about Thrinadh.');
       return;
     }
-    if (c.includes('command palette') || c.includes('search')) {
-      if (window.openCommandPalette) window.openCommandPalette();
+    if (c.includes('command palette') || c.includes('open command palette') || c.includes('search')) {
+      if (window.openCommandPalette) {
+        window.openCommandPalette();
+        const query = c.replace(/command palette|open command palette|search( for)?/g, '').trim();
+        if (query) {
+          const input = document.getElementById('cmdkInput');
+          if (input) {
+            input.value = query;
+            input.dispatchEvent(new Event('input'));
+          }
+        }
+      }
+      return;
+    }
+    if (c.includes('stop listening') || c.includes('deactivate voice') || c.includes('turn off voice')) {
+      btn.click();
       return;
     }
     if (c.includes('mute voice') || c.includes('voice off')) {
@@ -906,207 +979,6 @@ function highlightSection(selector) {
   }, 3000);
 }
 
-// 3D Carousel Functionality
-function init3DCarousel() {
-  const carousel = document.getElementById('projectCarousel');
-  if (!carousel) return;
-  
-  const items = carousel.querySelectorAll('.carousel-item');
-  const prevBtn = document.getElementById('carouselPrev');
-  const nextBtn = document.getElementById('carouselNext');
-  const indicators = carousel.parentElement.querySelectorAll('.indicator');
-  
-  let currentIndex = 0;
-  const totalItems = items.length;
-  
-  function updateCarousel() {
-    items.forEach((item, index) => {
-      item.classList.remove('active', 'prev', 'next', 'far-prev', 'far-next');
-      
-      const diff = index - currentIndex;
-      if (diff === 0 || diff === totalItems || diff === -totalItems) {
-        item.classList.add('active');
-      } else if (diff === 1 || diff === -totalItems + 1) {
-        item.classList.add('next');
-      } else if (diff === -1 || diff === totalItems - 1) {
-        item.classList.add('prev');
-      } else if (diff === 2 || diff === -totalItems + 2) {
-        item.classList.add('far-next');
-      } else if (diff === -2 || diff === totalItems - 2) {
-        item.classList.add('far-prev');
-      }
-    });
-    
-    indicators.forEach((indicator, index) => {
-      indicator.classList.toggle('active', index === currentIndex);
-    });
-  }
-  
-  function nextSlide() {
-    currentIndex = (currentIndex + 1) % totalItems;
-    updateCarousel();
-  }
-  
-  function prevSlide() {
-    currentIndex = (currentIndex - 1 + totalItems) % totalItems;
-    updateCarousel();
-  }
-  
-  function goToSlide(index) {
-    currentIndex = index;
-    updateCarousel();
-  }
-  
-  prevBtn?.addEventListener('click', prevSlide);
-  nextBtn?.addEventListener('click', nextSlide);
-  
-  indicators.forEach((indicator, index) => {
-    indicator.addEventListener('click', () => goToSlide(index));
-  });
-  
-  // Auto-rotate carousel
-  let autoRotateInterval = setInterval(nextSlide, 5000);
-  
-  carousel.addEventListener('mouseenter', () => {
-    clearInterval(autoRotateInterval);
-  });
-  
-  carousel.addEventListener('mouseleave', () => {
-    autoRotateInterval = setInterval(nextSlide, 5000);
-  });
-  
-  // Keyboard navigation
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') prevSlide();
-    if (e.key === 'ArrowRight') nextSlide();
-  });
-  
-  updateCarousel();
-}
-
-// Touch Gestures for Mobile
-function initTouchGestures() {
-  const carousel = document.getElementById('projectCarousel');
-  if (!carousel || !window.Hammer) return;
-  
-  const hammer = new Hammer(carousel);
-  hammer.get('swipe').set({ direction: Hammer.DIRECTION_HORIZONTAL });
-  
-  hammer.on('swipeleft', () => {
-    const nextBtn = document.getElementById('carouselNext');
-    nextBtn?.click();
-  });
-  
-  hammer.on('swiperight', () => {
-    const prevBtn = document.getElementById('carouselPrev');
-    prevBtn?.click();
-  });
-  
-  // Haptic feedback on mobile
-  if ('vibrate' in navigator) {
-    carousel.addEventListener('click', () => {
-      navigator.vibrate(10);
-    });
-  }
-}
-
-// Parallax Scrolling
-function initParallax() {
-  const parallaxElements = document.querySelectorAll('.parallax-layer');
-  
-  function updateParallax() {
-    const scrolled = window.pageYOffset;
-    
-    parallaxElements.forEach(element => {
-      const speed = element.dataset.speed || 0.5;
-      const yPos = -(scrolled * speed);
-      element.style.transform = `translateY(${yPos}px)`;
-    });
-  }
-  
-  window.addEventListener('scroll', updateParallax);
-  updateParallax();
-}
-
-// 3D Elements and Animations
-function init3DElements() {
-  // Add 3D floating animation to hero text
-  const heroTitle = document.querySelector('h1');
-  if (heroTitle) {
-    heroTitle.classList.add('animate-float');
-  }
-  
-  // 3D card tilt effects
-  const cards3d = document.querySelectorAll('.project-card-3d');
-  
-  cards3d.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      
-      const rotateX = ((y - centerY) / centerY) * -10;
-      const rotateY = ((x - centerX) / centerX) * 10;
-      
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(20px)`;
-    });
-    
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-  
-  // Add parallax layers to background
-  const bgBlobs = document.querySelector('.bg-blobs');
-  if (bgBlobs) {
-    bgBlobs.classList.add('parallax-container');
-    
-    const blobs = bgBlobs.querySelectorAll('.blob');
-    blobs.forEach((blob, index) => {
-      blob.classList.add('parallax-layer');
-      blob.dataset.speed = 0.1 + (index * 0.05);
-    });
-  }
-}
-
-// Project Demo Functions
-function openProjectDemo(projectId) {
-  // This would open a modal or new window with project demo
-  const demoUrls = {
-    'farmer-marketplace': 'https://farmer-plant-marketplace.vercel.app',
-    'results-system': '#',
-    'securepass': 'https://secure-pass-coral.vercel.app',
-    'dictionary': 'https://dictionary-f4nc.onrender.com',
-    'portfolio': 'https://thrinadh.vercel.app'
-  };
-  
-  const url = demoUrls[projectId];
-  if (url && url !== '#') {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  } else {
-    alert('Demo coming soon!');
-  }
-}
-
-function showProjectDetails(projectId) {
-  // This would show a modal with detailed project information
-  const projectDetails = {
-    'farmer-marketplace': 'A comprehensive platform connecting farmers directly with buyers, featuring real-time inventory management, secure payment processing, and advanced search capabilities.',
-    'results-system': 'An automated academic management system that handles student data, calculates CGPA, generates reports, and provides analytics for educational institutions.',
-    'securepass': 'A comprehensive security toolkit featuring password strength analysis, secure password generation, and text encryption using industry-standard algorithms.',
-    'dictionary': 'A feature-rich dictionary application with word definitions, pronunciations, examples, and user authentication for personalized features.',
-    'portfolio': 'A cutting-edge portfolio website showcasing advanced web development techniques including 3D animations, voice control, and responsive design.'
-  };
-  
-  const details = projectDetails[projectId];
-  if (details) {
-    alert(details);
-  }
-}
-
 function initCommandPalette() {
   const overlay = document.getElementById('cmdkOverlay');
   const input = document.getElementById('cmdkInput');
@@ -1130,7 +1002,7 @@ function initCommandPalette() {
     });
     const soc = [['GitHub', 'GitHub'], ['LinkedIn', 'LinkedIn'], ['CodeChef', 'CodeChef'], ['HackerRank', 'HackerRank'], ['Instagram', 'Instagram'], ['WhatsApp', 'WhatsApp']];
     soc.forEach(s => arr.push({ label: 'Open ' + s[0], group: 'Social', run: () => { const link = document.querySelector(`.social-links a[aria-label="${s[1]}"]`); if (link) link.click(); } }));
-    [['Toggle theme', () => themeToggle.click()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['Open Resume', () => { const l = document.querySelector('a[href="RESUME.docx"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
+    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['Open Resume', () => { const l = document.querySelector('a[href="RESUME.docx"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
     items = arr;
   }
   function show() {
@@ -1222,8 +1094,4 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initVoiceControl();
   initCommandPalette();
-  init3DCarousel();
-  initTouchGestures();
-  initParallax();
-  init3DElements();
 });
