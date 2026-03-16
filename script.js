@@ -620,7 +620,7 @@ function initVoiceControl() {
       speak('Opening WhatsApp');
       return;
     }
-    if (c.includes('open resume') || c.includes('download resume')) {
+    if (c.includes('open resume') || c.includes('view resume')) {
       const link = document.querySelector('a[href="RESUME.docx"]');
       if (link) link.click();
       speak('Opening resume');
@@ -694,10 +694,10 @@ function initVoiceControl() {
       speak('You can contact Thrinadh via email at thrinadh2005@gmail.com. He is located in Rajahmundry, Andhra Pradesh. You can also reach out through social media links like GitHub, LinkedIn, or WhatsApp.');
       return;
     }
-    if (c.includes('resume') || c.includes('download resume')) {
+    if (c.includes('resume') || c.includes('view resume')) {
       const link = document.querySelector('a[href="RESUME.docx"]');
       if (link) link.click();
-      speak('Opening resume for download');
+      speak('Opening resume');
       return;
     }
     if (c.includes('social media') || c.includes('social links') || c.includes('social profiles')) {
@@ -1002,7 +1002,7 @@ function initCommandPalette() {
     });
     const soc = [['GitHub', 'GitHub'], ['LinkedIn', 'LinkedIn'], ['CodeChef', 'CodeChef'], ['HackerRank', 'HackerRank'], ['Instagram', 'Instagram'], ['WhatsApp', 'WhatsApp']];
     soc.forEach(s => arr.push({ label: 'Open ' + s[0], group: 'Social', run: () => { const link = document.querySelector(`.social-links a[aria-label="${s[1]}"]`); if (link) link.click(); } }));
-    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['Open Resume', () => { const l = document.querySelector('a[href="RESUME.docx"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
+    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['View Resume', () => { const l = document.querySelector('a[href="RESUME.docx"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
     items = arr;
   }
   function show() {
