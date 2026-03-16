@@ -25,7 +25,7 @@ A blazing fast, responsive, and modern personal portfolio website built with van
 ├── index.html      # Main entry point
 ├── styles.css      # Custom styling and design system
 ├── script.js       # Logic for theme, animations, and interactions
-├── mypic.jpg       # Profile image
+├── mypic.png       # Profile image
 └── README.md       # Project documentation
 ```
 
