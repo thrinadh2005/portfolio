@@ -1,3 +1,17 @@
+// Loader Logic
+function hideLoader() {
+  const loader = document.getElementById('premium-loader');
+  if (loader && !loader.classList.contains('fade-out')) {
+    loader.classList.add('fade-out');
+  }
+}
+
+window.addEventListener('load', () => {
+  setTimeout(hideLoader, 2500); // Matches the loader animation duration
+});
+
+// Fallback: hide loader after 5 seconds if load event hasn't fired
+setTimeout(hideLoader, 5000);
 
 // DOM Elements
 const themeToggle = document.getElementById('themeToggle');
@@ -194,27 +208,116 @@ function initTilt() {
 }
 
 // Contact Form
-const contactForm = document.getElementById('contactForm');
-if (contactForm) {
-  contactForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    const status = document.getElementById('formStatus');
+// ... existing contact form logic ...
 
-    // Simple mailto trigger
-    const subject = `Portfolio Contact from ${name}`;
-    const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${message}`;
-    window.location.href = `mailto:thrinadh2005@gmail.com?subject=${subject}&body=${body}`;
+// Cyber Matrix Game Logic
+const matrixCells = document.querySelectorAll('.matrix-cell');
+const levelDisplay = document.getElementById('game-level');
+const highScoreDisplay = document.getElementById('game-highscore');
+const gameMessage = document.getElementById('game-message');
+const startBtn = document.getElementById('start-game');
 
-    status.textContent = "Opening your email client...";
-    status.style.color = "var(--accent)";
-    setTimeout(() => {
-      status.textContent = "";
-      contactForm.reset();
-    }, 3000);
-  });
+let sequence = [];
+let userSequence = [];
+let level = 1;
+let highScore = 0;
+let isPlaying = false;
+let canClick = false;
+
+function getRandomCell() {
+  return Math.floor(Math.random() * 16);
+}
+
+async function playSequence() {
+  canClick = false;
+  gameMessage.textContent = "Memorizing Sequence...";
+  gameMessage.style.color = "var(--accent)";
+
+  for (let cellIndex of sequence) {
+    await new Promise(resolve => setTimeout(resolve, 600));
+    const cell = matrixCells[cellIndex];
+    if (cell) {
+      cell.classList.add('active');
+      setTimeout(() => cell.classList.remove('active'), 400);
+    }
+  }
+
+  await new Promise(resolve => setTimeout(resolve, 300));
+  canClick = true;
+  gameMessage.textContent = "Your Turn - Replicate!";
+  gameMessage.style.color = "var(--accent3)";
+}
+
+function handleCellClick(e) {
+  if (!canClick || !isPlaying) return;
+
+  const index = parseInt(e.target.getAttribute('data-index'));
+  userSequence.push(index);
+  
+  // Visual feedback
+  e.target.classList.add('active');
+  setTimeout(() => e.target.classList.remove('active'), 200);
+
+  // Check if correct
+  if (userSequence[userSequence.length - 1] !== sequence[userSequence.length - 1]) {
+    gameOver();
+    return;
+  }
+
+  if (userSequence.length === sequence.length) {
+    nextLevel();
+  }
+}
+
+function nextLevel() {
+  canClick = false;
+  level++;
+  if (levelDisplay) levelDisplay.textContent = level;
+  userSequence = [];
+  sequence.push(getRandomCell());
+  
+  gameMessage.textContent = "Level Clear! Secure...";
+  setTimeout(playSequence, 1000);
+}
+
+function gameOver() {
+  canClick = false;
+  isPlaying = false;
+  
+  if (level > highScore) {
+    highScore = level - 1;
+    if (highScoreDisplay) highScoreDisplay.textContent = highScore;
+  }
+
+  gameMessage.textContent = "Breach Failed! Sequence Terminated.";
+  gameMessage.style.color = "#ff4d4d";
+  
+  // Flash error
+  matrixCells.forEach(cell => cell.classList.add('error'));
+  setTimeout(() => {
+    matrixCells.forEach(cell => cell.classList.remove('error'));
+    if (startBtn) {
+      startBtn.style.display = 'inline-flex';
+      startBtn.textContent = 'Restart Breach';
+    }
+  }, 1000);
+}
+
+function startGame() {
+  level = 1;
+  if (levelDisplay) levelDisplay.textContent = level;
+  sequence = [getRandomCell(), getRandomCell()]; // Start with 2
+  userSequence = [];
+  isPlaying = true;
+  if (startBtn) startBtn.style.display = 'none';
+  playSequence();
+}
+
+if (matrixCells.length > 0) {
+  matrixCells.forEach(cell => cell.addEventListener('click', handleCellClick));
+}
+if (startBtn) {
+  startBtn.addEventListener('click', startGame);
 }
 
 function initVoiceControl() {

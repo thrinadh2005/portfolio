@@ -30,7 +30,20 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 
-<body>
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+  <!-- Premium Loader -->
+  <div id="premium-loader" class="premium-loader">
+    <div class="loader-content">
+      <div class="loader-circle">
+        <img src="mypic.png" alt="Loading...">
+      </div>
+      <div class="loader-progress">
+        <div class="loader-bar"></div>
+      </div>
+      <div class="loader-text">Initializing Secure Environment...</div>
+    </div>
+  </div>
+
   <a href="#main" class="skip-link">Skip to content</a>
 
 
@@ -103,6 +116,16 @@
         <div class="col-lg-5">
           <div class="hero-image">
             <div class="image-border">
+              <svg class="profile-name-ring" viewBox="0 0 420 420" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <path id="circlePath" d="M 210,210 m -160,0 a 160,160 0 1,1 320,0 a 160,160 0 1,1 -320,0"></path>
+                </defs>
+                <text class="ring-text">
+                  <textPath href="#circlePath" startOffset="0%">
+                    ADABALA VENKATA THRINADH • CYBERSECURITY ENTHUSIAST • CSE STUDENT • ADABALA VENKATA THRINADH • CYBERSECURITY ENTHUSIAST • CSE STUDENT •
+                  </textPath>
+                </text>
+              </svg>
               <img src="mypic.png" alt="Thrinadh Profile" onclick="openModal('mypic.png')">
             </div>
           </div>
@@ -292,8 +315,62 @@
       </div>
     </section>
 
+    <!-- Mini Game Section -->
+    <section id="game" class="game-section">
+      <div class="container">
+        <div class="section-card">
+          <div class="section-head">
+            <div class="icon"><i class="bi bi-shield-lock-fill"></i></div>
+            <h2 class="heading">Cyber <span>Matrix</span></h2>
+            <div class="section-line"></div>
+          </div>
+          
+          <div class="row align-items-center gy-5">
+            <div class="col-lg-6">
+              <div class="game-info">
+                <p class="mb-4" style="color: var(--muted); font-size: 1.1rem;">
+                  Test your neural processing speed. Memorize the <strong>security sequence</strong> and replicate it to breach the next level.
+                </p>
+                <div class="game-stats mb-4">
+                  <div class="game-stat-item mb-2">
+                    <span class="label">Current Level:</span>
+                    <span id="game-level" class="value">1</span>
+                  </div>
+                  <div class="game-stat-item">
+                    <span class="label">High Score:</span>
+                    <span id="game-highscore" class="value">0</span>
+                  </div>
+                </div>
+                <div id="game-message" class="mb-4" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent3);">Ready to breach?</div>
+                <button id="start-game" class="btn-primary">Initialize Breach <i class="bi bi-terminal"></i></button>
+              </div>
+            </div>
+            <div class="col-lg-6 d-flex justify-content-center">
+              <div class="matrix-grid" id="matrix-grid">
+                <!-- 16 cells for a 4x4 grid -->
+                <div class="matrix-cell" data-index="0"></div>
+                <div class="matrix-cell" data-index="1"></div>
+                <div class="matrix-cell" data-index="2"></div>
+                <div class="matrix-cell" data-index="3"></div>
+                <div class="matrix-cell" data-index="4"></div>
+                <div class="matrix-cell" data-index="5"></div>
+                <div class="matrix-cell" data-index="6"></div>
+                <div class="matrix-cell" data-index="7"></div>
+                <div class="matrix-cell" data-index="8"></div>
+                <div class="matrix-cell" data-index="9"></div>
+                <div class="matrix-cell" data-index="10"></div>
+                <div class="matrix-cell" data-index="11"></div>
+                <div class="matrix-cell" data-index="12"></div>
+                <div class="matrix-cell" data-index="13"></div>
+                <div class="matrix-cell" data-index="14"></div>
+                <div class="matrix-cell" data-index="15"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-   
     <!-- Projects Section -->
     <section id="portfolio">
       <div class="container">
