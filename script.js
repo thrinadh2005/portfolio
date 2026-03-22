@@ -16,31 +16,8 @@ setTimeout(hideLoader, 5000);
 // DOM Elements
 const themeToggle = document.getElementById('themeToggle');
 const voiceToggle = document.getElementById('voiceToggle');
-const body = document.body;
 
 // Theme Logic
-function initTheme() {
-  const savedTheme = localStorage.getItem('theme');
-  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-  if (savedTheme === 'light') {
-    document.body.classList.add('light');
-    updateThemeIcon(true);
-  } else if (savedTheme === 'dark') {
-    document.body.classList.remove('light');
-    updateThemeIcon(false);
-  } else {
-    // Default based on system preference
-    if (!prefersDark) {
-      document.body.classList.add('light');
-      updateThemeIcon(true);
-    } else {
-      document.body.classList.remove('light');
-      updateThemeIcon(false);
-    }
-  }
-}
-
 function updateThemeIcon(isLight) {
   if (!themeToggle) return;
   const icon = themeToggle.querySelector('i');
@@ -49,17 +26,25 @@ function updateThemeIcon(isLight) {
   }
 }
 
-// Initialize theme as soon as possible
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initTheme);
-} else {
-  initTheme();
+function initTheme() {
+  const savedTheme = localStorage.getItem('theme');
+  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
+    document.documentElement.classList.add('light');
+    updateThemeIcon(true);
+  } else {
+    document.documentElement.classList.remove('light');
+    updateThemeIcon(false);
+  }
 }
+
+// Immediate execution
+initTheme();
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('light');
-    const isLight = document.body.classList.contains('light');
+    const isLight = document.documentElement.classList.toggle('light');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateThemeIcon(isLight);
   });
@@ -71,18 +56,20 @@ const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-links a');
 const navbar = document.querySelector('.navbar');
 
+const body = document.body;
+
 function openModal(src) {
   if (modal && modalImg) {
     modal.style.display = "block";
     modalImg.src = src;
-    body.style.overflow = 'hidden'; // Prevent scrolling
+    document.body.style.overflow = 'hidden'; // Prevent scrolling
   }
 }
 
 function closeModal() {
   if (modal) {
     modal.style.display = "none";
-    body.style.overflow = '';
+    document.body.style.overflow = '';
   }
 }
 
