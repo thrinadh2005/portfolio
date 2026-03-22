@@ -30,26 +30,23 @@ function initTheme() {
   const savedTheme = localStorage.getItem('theme');
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
-  // Crucial: Use document.body to match the CSS selector .light
-  if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-    document.body.classList.add('light');
+  const isLight = savedTheme === 'light' || (!savedTheme && prefersLight);
+  
+  if (isLight) {
+    document.documentElement.classList.add('light');
     updateThemeIcon(true);
   } else {
-    document.body.classList.remove('light');
+    document.documentElement.classList.remove('light');
     updateThemeIcon(false);
   }
 }
 
 // Immediate execution
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initTheme);
-} else {
-  initTheme();
-}
+initTheme();
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const isLight = document.body.classList.toggle('light');
+    const isLight = document.documentElement.classList.toggle('light');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateThemeIcon(isLight);
   });

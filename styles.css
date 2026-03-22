@@ -21,24 +21,32 @@
   --navbar-bg: rgba(15, 23, 42, 0.8);
   --navbar-bg-solid: rgba(15, 23, 42, 0.95);
   --nav-hover-bg: rgba(255, 255, 255, 0.05);
+  transition: all 0.3s ease;
 }
 
-.light {
+:root.light,
+html.light {
   --bg: #f8fafc;
   --card-bg: rgba(255, 255, 255, 0.9);
   --glass: rgba(255, 255, 255, 0.8);
   --glass-border: rgba(148, 163, 184, 0.1);
   --text: #0f172a;
   --muted: #475569;
-  --accent: #2563eb; /* Stronger blue for light mode */
+  --accent: #2563eb;
   --accent-glow: rgba(37, 99, 235, 0.1);
   --accent2: #0ea5e9;
   --accent2-glow: rgba(14, 165, 233, 0.1);
-  --accent3: #10b981; /* Green for success in light mode */
+  --accent3: #10b981;
   --border: #e2e8f0;
   --navbar-bg: rgba(255, 255, 255, 0.85);
   --navbar-bg-solid: rgba(255, 255, 255, 0.95);
   --nav-hover-bg: rgba(37, 99, 235, 0.05);
+}
+
+* {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ================= PREMIUM LOADER ================= */
@@ -133,7 +141,7 @@ header {
 .hero-content {
   padding: clamp(20px, 5vw, 60px);
   border-radius: 48px;
-  background: rgba(255, 255, 255, 0.01);
+  background: var(--card-bg);
   border: 1px solid var(--glass-border);
   backdrop-filter: blur(20px);
 }
@@ -193,9 +201,9 @@ header {
   transform: scale(1.05);
   box-shadow: 0 0 80px var(--accent-glow);
 }
-*
+/* ================= GLOBAL RESET & BASE ================= */
+* {
   box-sizing: border-box;
-  scroll-behavior: smooth;
 }
 
 body {
@@ -226,13 +234,13 @@ body::after {
 
 /* Glassmorphism Refinement */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.01);
+  background: var(--card-bg);
   backdrop-filter: blur(25px) saturate(180%);
   -webkit-backdrop-filter: blur(25px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--glass-border);
   box-shadow:
-    0 20px 40px rgba(0, 0, 0, 0.2),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    0 20px 40px rgba(0, 0, 0, 0.15),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.03);
 }
 
 /* Dynamic Background Blobs */
