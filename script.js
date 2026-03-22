@@ -30,21 +30,26 @@ function initTheme() {
   const savedTheme = localStorage.getItem('theme');
   const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
 
+  // Crucial: Use document.body to match the CSS selector .light
   if (savedTheme === 'light' || (!savedTheme && prefersLight)) {
-    document.documentElement.classList.add('light');
+    document.body.classList.add('light');
     updateThemeIcon(true);
   } else {
-    document.documentElement.classList.remove('light');
+    document.body.classList.remove('light');
     updateThemeIcon(false);
   }
 }
 
 // Immediate execution
-initTheme();
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
+}
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const isLight = document.documentElement.classList.toggle('light');
+    const isLight = document.body.classList.toggle('light');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateThemeIcon(isLight);
   });
