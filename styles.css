@@ -47,68 +47,66 @@
   inset: 0;
   z-index: 9999;
   background: var(--bg);
-  display: flex;
+  display: flex; 
   align-items: center;
   justify-content: center;
-  transition: opacity 0.8s ease, visibility 0.8s;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
 }
 
 .loader-content {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: 1.5rem;
 }
 
-.loader-circle {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  padding: 5px;
+.loader-logo {
+  font-family: var(--font-main);
+  font-size: 2.5rem;
+  font-weight: 800;
   background: var(--gradient-main);
-  box-shadow: 0 0 30px var(--accent-glow);
-  position: relative;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -1px;
+  animation: logoFade 2s ease-in-out infinite alternate;
 }
 
-.loader-circle img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 3px solid var(--bg);
-}
-
-.loader-progress {
-  width: 200px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.1);
+.loader-progress-container {
+  width: 150px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
   overflow: hidden;
   position: relative;
 }
 
-.loader-bar {
+.loader-progress-bar {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 0;
   background: var(--gradient-main);
-  animation: loadProgress 2.5s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  animation: loadProgress 2s cubic-bezier(0.65, 0, 0.35, 1) forwards;
 }
 
-.loader-text {
+.loader-status {
   font-family: var(--font-mono);
-  font-size: 0.8rem;
-  color: var(--accent);
-  letter-spacing: 2px;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 3px;
   text-transform: uppercase;
-  animation: pulse 1.5s infinite;
 }
 
 @keyframes loadProgress {
   0% { width: 0; }
   100% { width: 100%; }
+}
+
+@keyframes logoFade {
+  from { opacity: 0.5; filter: blur(2px); }
+  to { opacity: 1; filter: blur(0); }
 }
 
 .premium-loader.fade-out {
@@ -117,32 +115,82 @@
 }
 
 /* ================= ROTATING RING ================= */
+.image-border {
+  position: relative;
+  width: min(400px, 80vw);
+  height: min(400px, 80vw);
+  border-radius: 50%;
+  padding: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 0 40px var(--accent-glow);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: 0.5s;
+  overflow: visible;
+}
+
+.image-border img {
+  width: 85%;
+  height: 85%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--glass-border);
+  z-index: 2;
+  transition: 0.5s;
+  animation: antiRotate 25s linear infinite;
+  cursor: pointer;
+}
+
 .profile-name-ring {
   position: absolute;
-  width: 130%;
-  height: 130%;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  z-index: -1;
-  animation: auraRotate 20s linear infinite;
+  z-index: 3;
+  animation: auraRotate 25s linear infinite;
 }
 
 .ring-text {
   fill: var(--accent);
   font-family: var(--font-mono);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 2px;
+  font-size: 13.5px;
+  font-weight: 600;
+  letter-spacing: 2.2px;
   text-transform: uppercase;
-  opacity: 0.6;
+  opacity: 0.8;
   transition: fill 0.5s ease;
 }
 
 .light .ring-text {
-  opacity: 0.8;
+  opacity: 0.9;
+  font-weight: 700;
+}
+
+@keyframes auraRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes antiRotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+.image-border::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  background: var(--gradient-main);
+  z-index: -1;
+  opacity: 0.3;
+  filter: blur(15px);
 }
 
 /* ================= GLOBAL RESET & BASE ================= */
-* {
+*
   box-sizing: border-box;
   scroll-behavior: smooth;
 }
@@ -386,50 +434,7 @@ header {
   align-items: center;
 }
 
-.image-border {
-  position: relative;
-  width: min(400px, 80vw);
-  height: min(400px, 80vw);
-  border-radius: 50%;
-  padding: 8px;
-  background: var(--gradient-main);
-  box-shadow: 0 0 50px var(--accent-glow);
-  animation: auraRotate 15s linear infinite;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: 0.5s;
-}
 
-@keyframes auraRotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.image-border img {
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 4px solid var(--bg);
-  animation: antiRotate 15s linear infinite;
-  cursor: pointer;
-}
-
-@keyframes antiRotate {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(-360deg);
-  }
-}
 
 .image-border:hover {
   transform: scale(1.05);
