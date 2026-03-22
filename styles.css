@@ -114,82 +114,85 @@
   visibility: hidden;
 }
 
-/* ================= ROTATING RING ================= */
+/* ================= HEADER & PROFILE ================= */
+header {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px 60px;
+  position: relative;
+}
+
+.hero-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.hero-content {
+  padding: clamp(20px, 5vw, 60px);
+  border-radius: 48px;
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(20px);
+}
+
+.hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .image-border {
   position: relative;
   width: min(400px, 80vw);
   height: min(400px, 80vw);
   border-radius: 50%;
-  padding: 0;
-  background: var(--card-bg);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 0 40px var(--accent-glow);
+  padding: 8px;
+  background: var(--gradient-main);
+  box-shadow: 0 0 50px var(--accent-glow);
+  animation: auraRotate 15s linear infinite;
   display: flex;
   justify-content: center;
   align-items: center;
   transition: 0.5s;
-  overflow: visible;
-}
-
-.image-border img {
-  width: 85%;
-  height: 85%;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--glass-border);
-  z-index: 2;
-  transition: 0.5s;
-  animation: antiRotate 25s linear infinite;
-  cursor: pointer;
-}
-
-.profile-name-ring {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 3;
-  animation: auraRotate 25s linear infinite;
-}
-
-.ring-text {
-  fill: var(--accent);
-  font-family: var(--font-mono);
-  font-size: 13.5px;
-  font-weight: 600;
-  letter-spacing: 2.2px;
-  text-transform: uppercase;
-  opacity: 0.8;
-  transition: fill 0.5s ease;
-}
-
-.light .ring-text {
-  opacity: 0.9;
-  font-weight: 700;
 }
 
 @keyframes auraRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.image-border img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--bg);
+  animation: antiRotate 15s linear infinite;
+  cursor: pointer;
 }
 
 @keyframes antiRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
-.image-border::after {
-  content: '';
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background: var(--gradient-main);
-  z-index: -1;
-  opacity: 0.3;
-  filter: blur(15px);
+.image-border:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 80px var(--accent-glow);
 }
-
-/* ================= GLOBAL RESET & BASE ================= */
 *
   box-sizing: border-box;
   scroll-behavior: smooth;
@@ -387,7 +390,7 @@ ul {
   width: 40px;
   height: 40px;
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--card-bg);
   border: 1px solid var(--border);
   color: var(--accent);
   cursor: pointer;
@@ -452,7 +455,7 @@ header {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
@@ -506,7 +509,7 @@ section.show {
 }
 
 .achievement-mini-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   padding: 15px 20px;
   border-radius: 20px;
   font-size: 1rem;
@@ -658,7 +661,7 @@ section.show {
 }
 
 .achievements-list li {
-  background: rgba(255, 255, 255, 0.01);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 32px;
@@ -684,7 +687,7 @@ section.show {
 
 /* ================= SKILLS ================= */
 .modern-skill-card {
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--glass-border);
@@ -702,7 +705,7 @@ section.show {
 
 /* Compact Skill/Service Cards */
 .skill-card {
-  background: rgba(255, 255, 255, 0.012);
+  background: var(--card-bg);
   backdrop-filter: blur(15px);
   border: 1px solid var(--glass-border);
   border-radius: 28px;
@@ -754,7 +757,7 @@ section.show {
   align-items: center;
   gap: 10px;
   padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card-bg);
   border: 1px solid var(--glass-border);
   border-radius: 100px;
   color: var(--text);
@@ -811,7 +814,7 @@ section.show {
 .filters {
   display: flex;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.02);
+  background: var(--card-bg);
   padding: 5px;
   border-radius: 50px;
   border: 1px solid var(--border);
@@ -841,7 +844,7 @@ section.show {
 }
 
 .project-card {
-  background: rgba(255, 255, 255, 0.01);
+  background: var(--card-bg);
   backdrop-filter: blur(20px);
   border: 1px solid var(--border);
   border-radius: 40px;
@@ -922,7 +925,7 @@ section.show {
 }
 
 .form-input {
-  background: rgba(255, 255, 255, 0.02) !important;
+  background: var(--card-bg) !important;
   border: 1px solid var(--border) !important;
   border-radius: 15px !important;
   padding: 18px !important;
