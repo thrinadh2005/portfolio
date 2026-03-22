@@ -21,32 +21,29 @@
   --navbar-bg: rgba(15, 23, 42, 0.8);
   --navbar-bg-solid: rgba(15, 23, 42, 0.95);
   --nav-hover-bg: rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
 }
 
 :root.light,
 html.light {
-  --bg: #f8fafc;
-  --card-bg: rgba(255, 255, 255, 0.9);
-  --glass: rgba(255, 255, 255, 0.8);
-  --glass-border: rgba(148, 163, 184, 0.1);
+  --bg: #f0f7ff;
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --glass: rgba(255, 255, 255, 0.85);
+  --glass-border: rgba(79, 172, 254, 0.1);
   --text: #0f172a;
-  --muted: #475569;
-  --accent: #2563eb;
-  --accent-glow: rgba(37, 99, 235, 0.1);
-  --accent2: #0ea5e9;
-  --accent2-glow: rgba(14, 165, 233, 0.1);
-  --accent3: #10b981;
+  --muted: #64748b;
+  --accent: #3a7bd5;
+  --accent-glow: rgba(58, 123, 213, 0.1);
+  --accent2: #00d2ff;
+  --accent2-glow: rgba(0, 210, 255, 0.1);
   --border: #e2e8f0;
   --navbar-bg: rgba(255, 255, 255, 0.85);
   --navbar-bg-solid: rgba(255, 255, 255, 0.95);
-  --nav-hover-bg: rgba(37, 99, 235, 0.05);
+  --nav-hover-bg: rgba(0, 0, 0, 0.06);
 }
 
 * {
   box-sizing: border-box;
   scroll-behavior: smooth;
-  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 /* ================= PREMIUM LOADER ================= */
