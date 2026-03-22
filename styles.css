@@ -445,8 +445,8 @@ ul {
   .navbar-collapse {
     background: #0a0a0c;
     margin-top: 15px;
-    padding: 20px;
-    border-radius: 24px;
+    padding: 10px 0; /* Reduced padding for list style */
+    border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     max-height: 80vh;
@@ -461,34 +461,55 @@ ul {
   
   .nav-links {
     flex-direction: column;
-    gap: 8px !important;
+    gap: 0 !important; /* No gap for seamless list */
     align-items: stretch;
   }
 
   .nav-links .nav-link {
-    padding: 12px 20px !important;
+    padding: 16px 25px !important;
     width: 100%;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     color: #ffffff !important;
-    text-align: center;
-    font-size: 0.95rem;
-    font-weight: 600;
-    border-radius: 100px !important; /* Make them look like pills from the image */
-    margin-bottom: 4px;
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 500;
+    border-radius: 0 !important;
+    margin-bottom: 0;
+    transition: all 0.2s ease;
+  }
+
+  .nav-links .nav-link:last-child {
+    border-bottom: none;
+  }
+
+  .nav-links .nav-link:hover {
+    background: rgba(255, 255, 255, 0.03);
+    padding-left: 30px !important; /* Subtle slide effect */
   }
 
   .light .nav-links .nav-link {
-    background: #f1f5f9;
-    border-color: #e2e8f0;
+    border-bottom-color: rgba(0, 0, 0, 0.05);
     color: #0f172a !important;
   }
 
+  .light .nav-links .nav-link:hover {
+    background: #f8fafc;
+  }
+
   .nav-links .nav-link.active {
-    background: var(--gradient-main) !important;
-    color: #000000 !important;
-    border: none;
-    box-shadow: 0 4px 15px var(--accent-glow);
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: var(--accent) !important;
+    font-weight: 700;
+    border-left: 4px solid var(--accent);
+    padding-left: 21px !important; /* Adjust for border */
+    box-shadow: none;
+  }
+
+  .light .nav-links .nav-link.active {
+    background: #f1f5f9 !important;
+    border-left-color: var(--accent);
   }
 }
 
