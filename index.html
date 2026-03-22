@@ -112,9 +112,33 @@
         </div>
 
         <div class="col-lg-5">
-          <div class="hero-image">
-            <div class="image-border">
-              <img src="mypic.png" alt="Thrinadh Profile" onclick="openModal('mypic.png')">
+          <div class="hero-game-container">
+            <div class="game-info text-center mb-4">
+              <h4 class="mb-3" style="font-family: var(--font-mono); color: var(--accent); letter-spacing: 2px;">CYBER MATRIX</h4>
+              <div class="d-flex justify-content-center gap-4 mb-3">
+                <div class="game-stat-item"><span class="label" style="font-size: 0.8rem; opacity: 0.7;">LEVEL:</span> <span id="game-level" class="value" style="font-weight: 700; color: var(--accent);">1</span></div>
+                <div class="game-stat-item"><span class="label" style="font-size: 0.8rem; opacity: 0.7;">BEST:</span> <span id="game-highscore" class="value" style="font-weight: 700; color: var(--accent);">0</span></div>
+              </div>
+              <div id="game-message" class="mb-3" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent3); min-height: 1.2rem;">Ready to breach?</div>
+              <button id="start-game" class="btn-primary btn-sm px-4">Initialize <i class="bi bi-terminal"></i></button>
+            </div>
+            <div class="matrix-grid mx-auto" id="matrix-grid" style="max-width: 320px;">
+              <div class="matrix-cell" data-index="0"></div>
+              <div class="matrix-cell" data-index="1"></div>
+              <div class="matrix-cell" data-index="2"></div>
+              <div class="matrix-cell" data-index="3"></div>
+              <div class="matrix-cell" data-index="4"></div>
+              <div class="matrix-cell" data-index="5"></div>
+              <div class="matrix-cell" data-index="6"></div>
+              <div class="matrix-cell" data-index="7"></div>
+              <div class="matrix-cell" data-index="8"></div>
+              <div class="matrix-cell" data-index="9"></div>
+              <div class="matrix-cell" data-index="10"></div>
+              <div class="matrix-cell" data-index="11"></div>
+              <div class="matrix-cell" data-index="12"></div>
+              <div class="matrix-cell" data-index="13"></div>
+              <div class="matrix-cell" data-index="14"></div>
+              <div class="matrix-cell" data-index="15"></div>
             </div>
           </div>
         </div>
@@ -296,62 +320,6 @@
                   <li>Problem Solving (HackerRank)</li>
                   <li>Java/Python/CSS (HackerRank)</li>
                 </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Mini Game Section -->
-    <section id="game" class="game-section">
-      <div class="container">
-        <div class="section-card">
-          <div class="section-head">
-            <div class="icon"><i class="bi bi-shield-lock-fill"></i></div>
-            <h2 class="heading">Cyber <span>Matrix</span></h2>
-            <div class="section-line"></div>
-          </div>
-          
-          <div class="row align-items-center gy-5">
-            <div class="col-lg-6">
-              <div class="game-info">
-                <p class="mb-4" style="color: var(--muted); font-size: 1.1rem;">
-                  Test your neural processing speed. Memorize the <strong>security sequence</strong> and replicate it to breach the next level.
-                </p>
-                <div class="game-stats mb-4">
-                  <div class="game-stat-item mb-2">
-                    <span class="label">Current Level:</span>
-                    <span id="game-level" class="value">1</span>
-                  </div>
-                  <div class="game-stat-item">
-                    <span class="label">High Score:</span>
-                    <span id="game-highscore" class="value">0</span>
-                  </div>
-                </div>
-                <div id="game-message" class="mb-4" style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent3);">Ready to breach?</div>
-                <button id="start-game" class="btn-primary">Initialize Breach <i class="bi bi-terminal"></i></button>
-              </div>
-            </div>
-            <div class="col-lg-6 d-flex justify-content-center">
-              <div class="matrix-grid" id="matrix-grid">
-                <!-- 16 cells for a 4x4 grid -->
-                <div class="matrix-cell" data-index="0"></div>
-                <div class="matrix-cell" data-index="1"></div>
-                <div class="matrix-cell" data-index="2"></div>
-                <div class="matrix-cell" data-index="3"></div>
-                <div class="matrix-cell" data-index="4"></div>
-                <div class="matrix-cell" data-index="5"></div>
-                <div class="matrix-cell" data-index="6"></div>
-                <div class="matrix-cell" data-index="7"></div>
-                <div class="matrix-cell" data-index="8"></div>
-                <div class="matrix-cell" data-index="9"></div>
-                <div class="matrix-cell" data-index="10"></div>
-                <div class="matrix-cell" data-index="11"></div>
-                <div class="matrix-cell" data-index="12"></div>
-                <div class="matrix-cell" data-index="13"></div>
-                <div class="matrix-cell" data-index="14"></div>
-                <div class="matrix-cell" data-index="15"></div>
               </div>
             </div>
           </div>

@@ -17,11 +17,6 @@ setTimeout(hideLoader, 5000);
 const themeToggle = document.getElementById('themeToggle');
 const voiceToggle = document.getElementById('voiceToggle');
 const body = document.body;
-const modal = document.getElementById("imageModal");
-const modalImg = document.getElementById("modalImage");
-const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-links a');
-const navbar = document.querySelector('.navbar');
 
 // Theme Logic
 function initTheme() {
@@ -29,41 +24,53 @@ function initTheme() {
   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   if (savedTheme === 'light') {
-    body.classList.add('light');
+    document.body.classList.add('light');
     updateThemeIcon(true);
   } else if (savedTheme === 'dark') {
-    body.classList.remove('light');
+    document.body.classList.remove('light');
     updateThemeIcon(false);
   } else {
-    // Default to dark mode if no preference
+    // Default based on system preference
     if (!prefersDark) {
-      body.classList.add('light');
+      document.body.classList.add('light');
       updateThemeIcon(true);
     } else {
+      document.body.classList.remove('light');
       updateThemeIcon(false);
     }
   }
 }
 
 function updateThemeIcon(isLight) {
+  if (!themeToggle) return;
   const icon = themeToggle.querySelector('i');
-  if (isLight) {
-    icon.className = 'bi bi-sun-fill';
-  } else {
-    icon.className = 'bi bi-moon-stars-fill';
+  if (icon) {
+    icon.className = isLight ? 'bi bi-sun-fill' : 'bi bi-moon-stars-fill';
   }
+}
+
+// Initialize theme as soon as possible
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initTheme);
+} else {
+  initTheme();
 }
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    body.classList.toggle('light');
-    const isLight = body.classList.contains('light');
+    document.body.classList.toggle('light');
+    const isLight = document.body.classList.contains('light');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateThemeIcon(isLight);
   });
 }
 
-// Modal Logic
+const modal = document.getElementById("imageModal");
+const modalImg = document.getElementById("modalImage");
+const sections = document.querySelectorAll('section');
+const navLinks = document.querySelectorAll('.nav-links a');
+const navbar = document.querySelector('.navbar');
+
 function openModal(src) {
   if (modal && modalImg) {
     modal.style.display = "block";
