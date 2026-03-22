@@ -55,8 +55,21 @@ if (themeToggle) {
 const modal = document.getElementById("imageModal");
 const modalImg = document.getElementById("modalImage");
 const sections = document.querySelectorAll('section');
-const navLinks = document.querySelectorAll('.nav-links a');
 const navbar = document.querySelector('.navbar');
+const navLinks = document.querySelectorAll('.nav-link');
+const navbarCollapse = document.getElementById('navbarNav');
+
+// Close mobile menu on click
+if (navLinks.length > 0) {
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 1200 && navbarCollapse && navbarCollapse.classList.contains('show')) {
+        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+        bsCollapse.hide();
+      }
+    });
+  });
+}
 
 const body = document.body;
 
