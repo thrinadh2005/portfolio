@@ -443,73 +443,63 @@ ul {
 
 @media (max-width: 991.98px) {
   .navbar-collapse {
-    background: #0a0a0c;
-    margin-top: 15px;
-    padding: 10px 0; /* Reduced padding for list style */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #0a0a0c !important;
+    margin-top: 10px;
+    padding: 10px 0;
     border-radius: 20px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
     max-height: 80vh;
     overflow-y: auto;
+    z-index: 1001;
   }
 
   .light .navbar-collapse {
-    background: #ffffff;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-    border-color: rgba(0, 0, 0, 0.05);
+    background: #ffffff !important;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: rgba(0, 0, 0, 0.1);
   }
   
   .nav-links {
     flex-direction: column;
-    gap: 0 !important; /* No gap for seamless list */
+    gap: 0 !important;
     align-items: stretch;
+    padding: 0;
   }
 
   .nav-links .nav-link {
     padding: 16px 25px !important;
     width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: transparent !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
     color: #ffffff !important;
     text-align: left;
     font-size: 1rem;
-    font-weight: 500;
+    font-weight: 600;
     border-radius: 0 !important;
-    margin-bottom: 0;
+    margin: 0 !important;
     transition: all 0.2s ease;
   }
 
-  .nav-links .nav-link:last-child {
-    border-bottom: none;
-  }
-
-  .nav-links .nav-link:hover {
-    background: rgba(255, 255, 255, 0.03);
-    padding-left: 30px !important; /* Subtle slide effect */
-  }
-
   .light .nav-links .nav-link {
-    border-bottom-color: rgba(0, 0, 0, 0.05);
+    border-bottom-color: rgba(0, 0, 0, 0.05) !important;
     color: #0f172a !important;
-  }
-
-  .light .nav-links .nav-link:hover {
-    background: #f8fafc;
   }
 
   .nav-links .nav-link.active {
     background: rgba(255, 255, 255, 0.05) !important;
     color: var(--accent) !important;
-    font-weight: 700;
-    border-left: 4px solid var(--accent);
-    padding-left: 21px !important; /* Adjust for border */
-    box-shadow: none;
+    border-left: 4px solid var(--accent) !important;
+    padding-left: 21px !important;
   }
 
   .light .nav-links .nav-link.active {
     background: #f1f5f9 !important;
-    border-left-color: var(--accent);
   }
 }
 

@@ -34,19 +34,22 @@ function initTheme() {
   
   if (isLight) {
     document.documentElement.classList.add('light');
+    document.body.classList.add('light');
     updateThemeIcon(true);
   } else {
     document.documentElement.classList.remove('light');
+    document.body.classList.remove('light');
     updateThemeIcon(false);
   }
 }
 
-// Immediate execution
+// Immediate execution to prevent flash
 initTheme();
 
 if (themeToggle) {
   themeToggle.addEventListener('click', () => {
-    const isLight = document.documentElement.classList.toggle('light');
+    document.documentElement.classList.toggle('light');
+    const isLight = document.body.classList.toggle('light');
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
     updateThemeIcon(isLight);
   });
