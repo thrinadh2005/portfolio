@@ -442,12 +442,12 @@ ul {
 
 @media (max-width: 1199.98px) {
   .navbar-collapse {
-    background: var(--bg); /* Use base background for maximum contrast */
+    background: #0a0a0c; /* Lighter than page background for depth */
     margin-top: 15px;
     padding: 25px;
     border-radius: 24px;
-    border: 1px solid var(--glass-border);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
     max-height: 80vh;
     overflow-y: auto;
   }
@@ -455,6 +455,7 @@ ul {
   .light .navbar-collapse {
     background: #ffffff;
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.05);
   }
   
   .nav-links {
@@ -464,14 +465,25 @@ ul {
   }
 
   .nav-links .nav-link {
-    padding: 12px 20px !important;
+    padding: 14px 20px !important;
     width: 100%;
-    background: var(--card-bg);
-    border: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    color: #ffffff !important; /* Force white text for dark mode */
+    text-align: left;
+    font-size: 1rem;
+    font-weight: 600;
   }
 
   .light .nav-links .nav-link {
-    color: var(--text) !important;
+    background: #f8fafc;
+    border-color: #e2e8f0;
+    color: #0f172a !important; /* Force dark text for light mode */
+  }
+
+  .nav-links .nav-link.active {
+    background: var(--gradient-main) !important;
+    color: #000000 !important;
   }
 }
 
