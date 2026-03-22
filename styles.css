@@ -364,13 +364,14 @@ ul {
 }
 
 .nav-links .nav-link {
-  padding: 8px 16px !important;
-  font-size: 0.9rem;
+  padding: 8px clamp(8px, 1vw, 16px) !important;
+  font-size: clamp(0.75rem, 0.85vw, 0.9rem);
   font-weight: 500;
   color: var(--muted) !important;
   transition: all 0.3s ease;
   border-radius: 50px;
   text-align: center;
+  white-space: nowrap;
 }
 
 .nav-links .nav-link:hover {
@@ -440,7 +441,7 @@ ul {
   }
 }
 
-@media (max-width: 1199.98px) {
+@media (max-width: 991.98px) {
   .navbar-collapse {
     background: #0a0a0c; /* Lighter than page background for depth */
     margin-top: 15px;

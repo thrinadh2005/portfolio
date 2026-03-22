@@ -63,7 +63,7 @@ const navbarCollapse = document.getElementById('navbarNav');
 if (navLinks.length > 0) {
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
-      if (window.innerWidth < 1200 && navbarCollapse && navbarCollapse.classList.contains('show')) {
+      if (window.innerWidth < 992 && navbarCollapse && navbarCollapse.classList.contains('show')) {
         const bsCollapse = new bootstrap.Collapse(navbarCollapse);
         bsCollapse.hide();
       }
