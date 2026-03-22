@@ -443,12 +443,12 @@ ul {
 
 @media (max-width: 991.98px) {
   .navbar-collapse {
-    background: #0a0a0c; /* Lighter than page background for depth */
+    background: #0a0a0c;
     margin-top: 15px;
-    padding: 25px;
+    padding: 20px;
     border-radius: 24px;
     border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
     max-height: 80vh;
     overflow-y: auto;
   }
@@ -461,30 +461,34 @@ ul {
   
   .nav-links {
     flex-direction: column;
-    gap: 12px !important;
+    gap: 8px !important;
     align-items: stretch;
   }
 
   .nav-links .nav-link {
-    padding: 14px 20px !important;
+    padding: 12px 20px !important;
     width: 100%;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.05);
-    color: #ffffff !important; /* Force white text for dark mode */
-    text-align: left;
-    font-size: 1rem;
+    color: #ffffff !important;
+    text-align: center;
+    font-size: 0.95rem;
     font-weight: 600;
+    border-radius: 100px !important; /* Make them look like pills from the image */
+    margin-bottom: 4px;
   }
 
   .light .nav-links .nav-link {
-    background: #f8fafc;
+    background: #f1f5f9;
     border-color: #e2e8f0;
-    color: #0f172a !important; /* Force dark text for light mode */
+    color: #0f172a !important;
   }
 
   .nav-links .nav-link.active {
     background: var(--gradient-main) !important;
     color: #000000 !important;
+    border: none;
+    box-shadow: 0 4px 15px var(--accent-glow);
   }
 }
 

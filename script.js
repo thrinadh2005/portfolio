@@ -63,8 +63,12 @@ const navbarCollapse = document.getElementById('navbarNav');
 if (navLinks.length > 0) {
   navLinks.forEach(link => {
     link.addEventListener('click', () => {
-      if (window.innerWidth < 992 && navbarCollapse && navbarCollapse.classList.contains('show')) {
-        const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+      const isMobile = window.innerWidth < 992;
+      const isExpanded = navbarCollapse && navbarCollapse.classList.contains('show');
+      
+      if (isMobile && isExpanded) {
+        // Use Bootstrap's native API to close the menu
+        const bsCollapse = bootstrap.Collapse.getInstance(navbarCollapse) || new bootstrap.Collapse(navbarCollapse);
         bsCollapse.hide();
       }
     });
