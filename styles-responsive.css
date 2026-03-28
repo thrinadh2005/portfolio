@@ -1,38 +1,32 @@
 /* ================= RESPONSIVE BOOTSTRAP FIXES ================= */
 
-/* Ensure proper Bootstrap container behavior */
-.container {
-  max-width: 100%;
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
+/* Fix Bootstrap container conflicts */
 @media (min-width: 576px) {
-  .container {
+  .container, .container-sm {
     max-width: 540px;
   }
 }
 
 @media (min-width: 768px) {
-  .container {
+  .container, .container-sm, .container-md {
     max-width: 720px;
   }
 }
 
 @media (min-width: 992px) {
-  .container {
+  .container, .container-sm, .container-md, .container-lg {
     max-width: 960px;
   }
 }
 
 @media (min-width: 1200px) {
-  .container {
+  .container, .container-sm, .container-md, .container-lg, .container-xl {
     max-width: 1140px;
   }
 }
 
 @media (min-width: 1400px) {
-  .container {
+  .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
     max-width: 1320px;
   }
 }
@@ -393,6 +387,24 @@ section {
   padding: 4rem 0;
 }
 
+@media (max-width: 767.98px) {
+  section {
+    padding: 3rem 0;
+  }
+}
+
+/* Fix for min-vh-100 on mobile */
+.min-vh-100 {
+  min-height: 100vh;
+}
+
+@media (max-width: 767.98px) {
+  .min-vh-100 {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+  }
+}
+
 /* Command Palette Styles */
 .cmdk-overlay {
   position: fixed;
@@ -527,12 +539,12 @@ kbd {
 }
 
 @media (max-width: 767.98px) {
-  section {
-    padding: 3rem 0;
-  }
-  
   .min-vh-100 {
     min-height: 100vh;
     min-height: -webkit-fill-available;
+  }
+  
+  section {
+    padding: 3rem 0;
   }
 }
