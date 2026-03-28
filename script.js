@@ -633,9 +633,15 @@ function initVoiceControl() {
   function handleVoiceCommand(cmd) {
     const c = cmd.toLowerCase();
     
-    // Portfolio explanation commands
+    // AI-Powered Commands
+    if (c.includes('ask ai') || c.includes('ai help') || c.includes('artificial intelligence')) {
+      handleAICommand(cmd);
+      return;
+    }
+    
+    // Enhanced portfolio explanation commands
     if (c.includes('tell me about thrinadh') || c.includes('who is thrinadh') || c.includes('about thrinadh')) {
-      explainThrinadh();
+      explainThrinadhAI();
       return;
     }
     if (c.includes('start tour') || c.includes('show me around') || c.includes('tell about me') || c.includes('tour portfolio') || c.includes('introduce yourself')) {
@@ -647,26 +653,36 @@ function initVoiceControl() {
       return;
     }
     if (c.includes('show projects') || c.includes('tell me about projects') || c.includes('explain projects')) {
-      explainProjects();
+      explainProjectsAI();
       return;
     }
     if (c.includes('show skills') || c.includes('tell me about skills') || c.includes('explain skills')) {
-      explainSkills();
+      explainSkillsAI();
       return;
     }
     if (c.includes('show education') || c.includes('tell me about education') || c.includes('explain education')) {
-      explainEducation();
+      explainEducationAI();
       return;
     }
     if (c.includes('show achievements') || c.includes('tell me about achievements') || c.includes('explain achievements')) {
-      explainAchievements();
+      explainAchievementsAI();
       return;
     }
     if (c.includes('show certifications') || c.includes('tell me about certifications') || c.includes('explain certifications')) {
-      explainCertifications();
+      explainCertificationsAI();
       return;
     }
     
+    // Smart project commands
+    if (c.includes('open project') || c.includes('show project') || c.includes('view project')) {
+      const projectName = c.replace(/(open|show|view) project/i, '').trim();
+      if (projectName) {
+        openProjectAI(projectName);
+        return;
+      }
+    }
+    
+    // Navigation commands
     const secMatch = c.match(/(go to|navigate to|open|show) (home|about|skills|education|certifications|projects|portfolio|experience|achievements|contact)/);
     if (secMatch) {
       const map = { home: '#home', about: '#about', skills: '#skills', education: '#education', certifications: '#certifications', projects: '#portfolio', portfolio: '#portfolio', experience: '#achievements', achievements: '#achievements', contact: '#contact' };
@@ -674,6 +690,8 @@ function initVoiceControl() {
       speak('Opening ' + secMatch[2]);
       return;
     }
+    
+    // Scroll commands
     if (c.includes('scroll down')) {
       window.scrollBy({ top: window.innerHeight * 0.8, behavior: 'smooth' });
       speak('Scrolling down');
@@ -694,178 +712,165 @@ function initVoiceControl() {
       speak('Bottom of page');
       return;
     }
+    
+    // Theme commands
     if (c.includes('toggle theme') || c.includes('switch theme') || c.includes('change theme')) {
       themeToggle.click();
       speak('Toggled theme');
       return;
     }
-    if (c.includes('dark mode')) {
-      setTheme('dark');
-      speak('Dark mode');
-      return;
-    }
-    if (c.includes('light mode')) {
+    if (c.includes('light theme') || c.includes('light mode')) {
       setTheme('light');
-      speak('Light mode');
+      speak('Switched to light theme');
       return;
     }
-    if (c.includes('open github')) {
-      openSocial('GitHub');
-      speak('Opening GitHub');
+    if (c.includes('dark theme') || c.includes('dark mode')) {
+      setTheme('dark');
+      speak('Switched to dark theme');
       return;
     }
-    if (c.includes('open linkedin')) {
-      openSocial('LinkedIn');
-      speak('Opening LinkedIn');
-      return;
-    }
-    if (c.includes('open codechef')) {
-      openSocial('CodeChef');
-      speak('Opening CodeChef');
-      return;
-    }
-    if (c.includes('open hackerrank')) {
-      openSocial('HackerRank');
-      speak('Opening HackerRank');
-      return;
-    }
-    if (c.includes('open instagram')) {
-      openSocial('Instagram');
-      speak('Opening Instagram');
-      return;
-    }
-    if (c.includes('open whatsapp')) {
-      openSocial('WhatsApp');
-      speak('Opening WhatsApp');
-      return;
-    }
-    if (c.includes('open resume') || c.includes('view resume')) {
-      const link = document.querySelector('a[href="RESUME.pdf"]');
-      if (link) link.click();
-      speak('Opening resume');
-      return;
-    }
-    if (c.includes('open image') || c.includes('open photo') || c.includes('show photo') || c.includes('show image')) {
-      openModal && openModal('mypic.png');
-      speak('Opening image');
-      return;
-    }
-    if (c.includes('close image') || c.includes('close photo') || c.includes('close')) {
-      closeModal && closeModal();
-      speak('Closed');
-      return;
-    }
-    const projMatch = c.match(/(filter|show) (all|web|security|research)/);
-    if (projMatch) {
-      const kind = projMatch[2] === 'all' ? 'all' : projMatch[2];
-      filterProjects(kind);
-      speak('Showing ' + kind + ' projects');
-      return;
-    }
-    const openMatch = c.match(/(open|launch) (project )?(.+)/);
-    if (openMatch) {
-      const name = openMatch[3].trim();
-      const ok = openProjectByName(name);
-      if (!ok) speak('Could not find project ' + name);
-      return;
-    }
-    if (c.includes('tell me more') || c.includes('more details') || c.includes('explain more')) {
-      const current = [...sections].find(s => {
-        const rect = s.getBoundingClientRect();
-        return rect.top >= 0 && rect.top < window.innerHeight / 2;
-      });
-      if (current) {
-        switch(current.id) {
-          case 'about': explainThrinadh(); break;
-          case 'skills': explainSkills(); break;
-          case 'education': explainEducation(); break;
-          case 'certifications': explainCertifications(); break;
-          case 'portfolio': explainProjects(); break;
-          case 'achievements': explainAchievements(); break;
-          default: readSection('#' + current.id);
-        }
+    
+    // Contact commands
+    if (c.includes('show resume') || c.includes('open cv') || c.includes('download resume')) {
+      const link = document.querySelector('a[href*="RESUME"]');
+      if (link) {
+        link.click();
+        speak('Opening resume for download');
+      } else {
+        speak('Resume not found');
       }
       return;
     }
-    if (c.includes('what are your skills') || c.includes('list your skills')) {
-      explainSkills();
-      return;
-    }
-    if (c.includes('what projects have you done') || c.includes('your projects')) {
-      explainProjects();
-      return;
-    }
-    if (c.includes('your education') || c.includes('where did you study')) {
-      explainEducation();
-      return;
-    }
-    if (c.includes('your achievements') || c.includes('what have you achieved')) {
-      explainAchievements();
-      return;
-    }
-    if (c.includes('your certifications') || c.includes('what certifications do you have')) {
-      explainCertifications();
-      return;
-    }
-    if (c.includes('contact information') || c.includes('how to contact') || c.includes('contact details')) {
+    if (c.includes('contact thrinadh') || c.includes('send message') || c.includes('email thrinadh')) {
       smoothScrollTo('#contact');
-      highlightSection('#contact');
-      speak('You can contact Thrinadh via email at thrinadh2005@gmail.com. He is located in Rajahmundry, Andhra Pradesh. You can also reach out through social media links like GitHub, LinkedIn, or WhatsApp.');
+      speak('Opening contact section. You can send a message to thrinadh at thrinadh2005@gmail.com');
       return;
     }
-    if (c.includes('resume') || c.includes('view resume')) {
-      const link = document.querySelector('a[href="RESUME.pdf"]');
-      if (link) link.click();
-      speak('Opening resume');
+    
+    // Social commands
+    if (c.includes('instagram') || c.includes('social media')) {
+      openSocial('Instagram');
+      speak('Opening Instagram profile');
       return;
     }
-    if (c.includes('social media') || c.includes('social links') || c.includes('social profiles')) {
-      smoothScrollTo('#home');
-      speak('Thrinadh is active on GitHub, LinkedIn, CodeChef, HackerRank, Instagram, and WhatsApp. You can find these links in the home section.');
+    if (c.includes('github') || c.includes('code')) {
+      openSocial('GitHub');
+      speak('Opening GitHub profile');
       return;
     }
-    if (c.includes('stop highlighting') || c.includes('remove highlight')) {
-      document.querySelectorAll('section').forEach(section => {
-        section.style.boxShadow = '';
-        section.style.transform = '';
-      });
-      speak('Highlights removed');
+    if (c.includes('linkedin') || c.includes('professional')) {
+      openSocial('LinkedIn');
+      speak('Opening LinkedIn profile');
       return;
     }
-    if (c.includes('help') || c.includes('what can you do')) {
-      speak('You can navigate sections, scroll, change theme, open social links, open projects by name, filter projects, open resume, read sections, and ask me to explain Thrinadh\'s portfolio. Say, tell me about Thrinadh.');
+    
+    // Help commands
+    if (c.includes('help') || c.includes('commands') || c.includes('what can you do')) {
+      speak('I can help you navigate the portfolio, explain sections, open projects, change themes, and provide AI-powered insights. Say "ask ai" followed by your question, or try commands like "show projects", "tell me about skills", or "start tour".');
       return;
     }
-    if (c.includes('command palette') || c.includes('open command palette') || c.includes('search')) {
-      if (window.openCommandPalette) {
-        window.openCommandPalette();
-        const query = c.replace(/command palette|open command palette|search( for)?/g, '').trim();
-        if (query) {
-          const input = document.getElementById('cmdkInput');
-          if (input) {
-            input.value = query;
-            input.dispatchEvent(new Event('input'));
-          }
-        }
+    
+    // Default response
+    speak('I didn\'t understand that command. Try saying "help" for available commands, or "ask ai" for intelligent assistance.');
+  }
+
+  // AI-Powered Functions
+  async function handleAICommand(command) {
+    showVoiceFeedback('AI Processing...');
+    
+    // Remove "ask ai" prefix and get the actual question
+    const question = command.replace(/(ask ai|ai help|artificial intelligence)/i, '').trim();
+    
+    if (!question) {
+      speak('What would you like to know? You can ask about Thrinadh\'s skills, projects, or any portfolio-related questions.');
+      hideVoiceFeedback();
+      return;
+    }
+    
+    try {
+      // Simulate AI processing (in real implementation, this would call an AI API)
+      const response = await generateAIResponse(question);
+      speak(response);
+    } catch (error) {
+      speak('Sorry, I encountered an error processing your question. Please try again.');
+    }
+    
+    hideVoiceFeedback();
+  }
+
+  async function generateAIResponse(question) {
+    // Simulated AI responses - in production, replace with actual AI API call
+    const responses = {
+      'skills': 'Thrinadh has expertise in Python, Java, and C programming, with strong foundations in data structures, algorithms, and cybersecurity. He\'s particularly skilled in web development, problem solving, and ethical hacking methodologies.',
+      'projects': 'Thrinadh has developed several impressive projects including a Farmer Marketplace platform, an automated Results System, a SecurePass security toolkit, and a full-stack Dictionary application. Each project demonstrates his technical versatility and problem-solving abilities.',
+      'education': 'Thrinadh is currently pursuing B.Tech in Computer Science at GMR Institute of Technology with an outstanding CGPA of 9.4. He has consistently maintained excellent academic performance throughout his education.',
+      'experience': 'Thrinadh has practical experience as an Event Coordinator for STEPCONE tech fest, NSS volunteer work, and participation in hackathons. He\'s also a competitive programmer with strong problem-solving skills.',
+      'certifications': 'Thrinadh has completed 14 certifications from Infosys Springboard covering AI, machine learning, deep learning, and data science. He also has certifications from L&T LearnConnect and NPTEL in various technical domains.',
+      'contact': 'You can contact Thrinadh through the contact form on this portfolio, or email him directly at thrinadh2005@gmail.com. He\'s also active on Instagram and other social platforms.',
+      'career': 'Thrinadh is a Computer Science student passionate about cybersecurity and software development. He\'s building a strong foundation in both theoretical concepts and practical applications, with a focus on secure coding practices.',
+      'future': 'Thrinadh aims to specialize in cybersecurity while continuing to develop his software development skills. He\'s particularly interested in AI, machine learning, and their applications in security.',
+      'default': 'That\'s an interesting question! Based on what I know about Thrinadh, he\'s a dedicated Computer Science student with strong technical skills and a passion for cybersecurity. You can explore specific sections of this portfolio to learn more about his skills, projects, and achievements.'
+    };
+    
+    // Simple keyword matching for demo purposes
+    for (const [key, response] of Object.entries(responses)) {
+      if (key === 'default') continue;
+      if (question.toLowerCase().includes(key)) {
+        return response;
       }
-      return;
     }
-    if (c.includes('stop listening') || c.includes('deactivate voice') || c.includes('turn off voice')) {
-      btn.click();
-      return;
-    }
-    if (c.includes('mute voice') || c.includes('voice off')) {
-      tts = false;
-      localStorage.setItem('voice_tts', 'false');
-      return;
-    }
-    if (c.includes('unmute voice') || c.includes('voice on')) {
-      tts = true;
-      localStorage.setItem('voice_tts', 'true');
-      speak('Voice enabled');
-      return;
+    
+    return responses.default;
+  }
+
+  function explainThrinadhAI() {
+    speak('Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology with a CGPA of 9.4. He specializes in secure coding practices and ethical hacking methodologies. Thrinadh is passionate about building robust applications while understanding their vulnerabilities from both defensive and offensive perspectives. He has completed 14 AI and machine learning certifications from Infosys Springboard and actively participates in hackathons and competitive programming.');
+  }
+
+  function explainProjectsAI() {
+    speak('Thrinadh has developed five major projects showcasing his technical versatility. The Farmer Marketplace connects local farmers with buyers using React and Node.js. The Results System automates academic management with Python and MySQL. SecurePass is a security toolkit with password analysis and encryption features. The Dictionary app is a full-stack application with user authentication. Finally, this portfolio itself demonstrates his frontend development skills with 3D effects and responsive design.');
+  }
+
+  function explainSkillsAI() {
+    speak('Thrinadh possesses strong programming skills in Python, Java, and C. He has excellent command over data structures, algorithms, and database management. His technical expertise includes web development, Git version control, and cybersecurity fundamentals. Thrinadh excels in problem solving and has completed advanced certifications in artificial intelligence, machine learning, and deep learning from Infosys Springboard.');
+  }
+
+  function explainEducationAI() {
+    speak('Thrinadh is currently pursuing B.Tech in Computer Science and Engineering at GMR Institute of Technology, maintaining an impressive CGPA of 9.4. He completed his intermediate education with a GPA of 9.76 and secondary school with 92.3%. His consistent academic excellence demonstrates his strong foundation in computer science concepts and dedication to learning.');
+  }
+
+  function explainAchievementsAI() {
+    speak('Thrinadh has diverse achievements including serving as Event Coordinator for STEPCONE national tech fest, where he managed logistics and ensured smooth execution. As an NSS volunteer, he contributes to community service and social welfare. He regularly participates in hackathons, demonstrating his ability to build innovative solutions under pressure. Additionally, he ranks highly on competitive programming platforms like HackerRank and CodeChef, showcasing his problem-solving expertise.');
+  }
+
+  function explainCertificationsAI() {
+    speak('Thrinadh has completed an impressive 14 certifications from Infosys Springboard, covering cutting-edge technologies including Natural Language Processing, Artificial Intelligence, Deep Learning, Computer Vision, and OpenAI GPT models. He also has certifications in Generative AI, Prompt Engineering, and Data Science. Additionally, he has completed courses from L&T LearnConnect in Python and web development, and NPTEL certifications in operating systems and problem solving.');
+  }
+
+  function openProjectAI(projectName) {
+    const projects = {
+      'farmer marketplace': 'https://farmer-plant-marketplace.vercel.app',
+      'results system': '#',
+      'securepass': 'https://secure-pass-coral.vercel.app/',
+      'dictionary': 'https://dictionary-f4nc.onrender.com/',
+      'portfolio': 'https://thrinadh.vercel.app/'
+    };
+    
+    const projectKey = projectName.toLowerCase();
+    const projectUrl = projects[projectKey];
+    
+    if (projectUrl) {
+      if (projectUrl !== '#') {
+        window.open(projectUrl, '_blank', 'noopener,noreferrer');
+        speak(`Opening ${projectName} project in a new tab`);
+      } else {
+        speak(`The ${projectName} project is available for demonstration but not publicly deployed. Would you like to see other projects?`);
+      }
+    } else {
+      speak(`I couldn't find a project named "${projectName}". Available projects are: Farmer Marketplace, Results System, SecurePass, Dictionary, and Portfolio.`);
     }
   }
+
   // Enhanced button click handler with better error handling
   btn.addEventListener('click', () => {
     try {
@@ -1103,75 +1108,226 @@ function initCommandPalette() {
   const input = document.getElementById('cmdkInput');
   const list = document.getElementById('cmdkList');
   if (!overlay || !input || !list) return;
+  
   let items = [];
   let filtered = [];
   let index = 0;
+  
   function build() {
     const arr = [];
+    
+    // Navigation items
     navLinks.forEach(a => {
       const t = a.textContent.trim();
       const href = a.getAttribute('href');
-      arr.push({ label: t, group: 'Go to', run: () => { const id = href; const el = document.querySelector(id); if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); } });
+      if (href && href.startsWith('#')) {
+        arr.push({ 
+          label: `Go to ${t}`, 
+          group: 'Navigation', 
+          run: () => { 
+            const el = document.querySelector(href); 
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              highlightSection(href);
+            }
+          } 
+        });
+      }
     });
-    document.querySelectorAll('#portfolio .project-card').forEach(card => {
-      const t = card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '';
-      const a = card.querySelector('.ext-link');
-      const href = a ? a.getAttribute('href') : '';
-      if (t && href) arr.push({ label: 'Open ' + t, group: 'Projects', run: () => { window.open(href, '_blank', 'noopener,noreferrer'); } });
+    
+    // Project items - Updated for 3D carousel
+    const projects = [
+      { name: 'Farmer Marketplace', url: 'https://farmer-plant-marketplace.vercel.app' },
+      { name: 'Results System', url: '#' },
+      { name: 'SecurePass', url: 'https://secure-pass-coral.vercel.app/' },
+      { name: 'Dictionary', url: 'https://dictionary-f4nc.onrender.com/' },
+      { name: 'Portfolio', url: 'https://thrinadh.vercel.app/' }
+    ];
+    
+    projects.forEach(project => {
+      arr.push({ 
+        label: `Open ${project.name}`, 
+        group: 'Projects', 
+        run: () => { 
+          if (project.url !== '#') {
+            window.open(project.url, '_blank', 'noopener,noreferrer');
+          } else {
+            alert(`${project.name} is available for demonstration but not publicly deployed.`);
+          }
+        } 
+      });
     });
-    const soc = [['GitHub', 'GitHub'], ['LinkedIn', 'LinkedIn'], ['CodeChef', 'CodeChef'], ['HackerRank', 'HackerRank'], ['Instagram', 'Instagram'], ['WhatsApp', 'WhatsApp']];
-    soc.forEach(s => arr.push({ label: 'Open ' + s[0], group: 'Social', run: () => { const link = document.querySelector(`.social-links a[aria-label="${s[1]}"]`); if (link) link.click(); } }));
-    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['View Resume', () => { const l = document.querySelector('a[href="RESUME.pdf"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
+    
+    // Social media items
+    const socialLinks = [
+      ['GitHub', 'https://github.com/thrinadh'],
+      ['LinkedIn', 'https://linkedin.com/in/thrinadh'],
+      ['Instagram', 'https://instagram.com/thrinadh_adabala'],
+      ['CodeChef', 'https://codechef.com/users/thrinadh'],
+      ['HackerRank', 'https://hackerrank.com/thrinadh']
+    ];
+    
+    socialLinks.forEach(([name, url]) => {
+      arr.push({ 
+        label: `Open ${name}`, 
+        group: 'Social', 
+        run: () => { 
+          window.open(url, '_blank', 'noopener,noreferrer');
+        } 
+      });
+    });
+    
+    // Action items
+    const actions = [
+      ['Toggle theme', () => themeToggle.click()],
+      ['Start Portfolio Tour', () => startPortfolioTour()],
+      ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }],
+      ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }],
+      ['View Resume', () => { 
+        const link = document.querySelector('a[href*="RESUME"]'); 
+        if (link) link.click(); 
+      }],
+      ['Filter All Projects', () => { 
+        const btn = document.querySelector('.filter-btn[data-filter="all"]'); 
+        if (btn) btn.click(); 
+      }],
+      ['Filter Web Projects', () => { 
+        const btn = document.querySelector('.filter-btn[data-filter="web"]'); 
+        if (btn) btn.click(); 
+      }],
+      ['Filter Security Projects', () => { 
+        const btn = document.querySelector('.filter-btn[data-filter="security"]'); 
+        if (btn) btn.click(); 
+      }],
+      ['Filter Research Projects', () => { 
+        const btn = document.querySelector('.filter-btn[data-filter="research"]'); 
+        if (btn) btn.click(); 
+      }],
+      ['Go to Contact', () => { 
+        smoothScrollTo('#contact');
+        highlightSection('#contact');
+      }],
+      ['Go to Top', () => { 
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }]
+    ];
+    
+    actions.forEach(([label, run]) => {
+      arr.push({ label, group: 'Actions', run });
+    });
+    
     items = arr;
   }
+  
   function show() {
     build();
     overlay.classList.add('show');
     overlay.setAttribute('aria-hidden', 'false');
     input.value = '';
     filter('');
-    setTimeout(() => input.focus(), 0);
+    setTimeout(() => input.focus(), 100);
   }
+  
   function hide() {
     overlay.classList.remove('show');
     overlay.setAttribute('aria-hidden', 'true');
   }
+  
   function filter(q) {
     const s = q.trim().toLowerCase();
-    filtered = !s ? items : items.filter(i => i.label.toLowerCase().includes(s));
+    filtered = !s ? items : items.filter(i => 
+      i.label.toLowerCase().includes(s) || 
+      i.group.toLowerCase().includes(s)
+    );
     render();
   }
+  
   function render() {
     index = 0;
     list.innerHTML = '';
-    filtered.forEach((it, i) => {
-      const d = document.createElement('div');
-      d.className = 'cmdk-item' + (i === index ? ' active' : '');
-      d.setAttribute('data-idx', String(i));
-      d.textContent = it.label;
-      d.addEventListener('mouseenter', () => { setActive(i); });
-      d.addEventListener('click', () => { run(i); });
-      list.appendChild(d);
+    
+    if (filtered.length === 0) {
+      const noResults = document.createElement('div');
+      noResults.className = 'cmdk-item disabled';
+      noResults.textContent = 'No results found';
+      list.appendChild(noResults);
+      return;
+    }
+    
+    // Group items
+    const groups = {};
+    filtered.forEach(item => {
+      if (!groups[item.group]) groups[item.group] = [];
+      groups[item.group].push(item);
     });
+    
+    Object.keys(groups).forEach(groupName => {
+      // Add group header
+      const header = document.createElement('div');
+      header.className = 'cmdk-group-header';
+      header.textContent = groupName;
+      list.appendChild(header);
+      
+      // Add group items
+      groups[groupName].forEach((it, i) => {
+        const d = document.createElement('div');
+        d.className = 'cmdk-item' + (i === index ? ' active' : '');
+        d.setAttribute('data-idx', String(index));
+        d.innerHTML = `<span class="cmdk-item-label">${it.label}</span>`;
+        d.addEventListener('mouseenter', () => { setActive(index); });
+        d.addEventListener('click', () => { run(index); });
+        list.appendChild(d);
+        index++;
+      });
+    });
+    
+    index = 0; // Reset to first item
   }
+  
   function setActive(i) {
-    index = Math.max(0, Math.min(i, filtered.length - 1));
-    list.querySelectorAll('.cmdk-item').forEach((el, idx) => {
-      if (idx === index) el.classList.add('active'); else el.classList.remove('active');
+    const items = list.querySelectorAll('.cmdk-item:not(.disabled)');
+    if (items.length === 0) return;
+    
+    index = Math.max(0, Math.min(i, items.length - 1));
+    items.forEach((el, idx) => {
+      if (idx === index) {
+        el.classList.add('active');
+        // Scroll into view if needed
+        el.scrollIntoView({ block: 'nearest' });
+      } else {
+        el.classList.remove('active');
+      }
     });
   }
+  
   function run(i) {
-    const it = filtered[i];
-    if (it && it.run) it.run();
-    hide();
+    const items = list.querySelectorAll('.cmdk-item:not(.disabled)');
+    const item = filtered.find(it => it.label === items[i]?.textContent?.trim());
+    if (item && item.run) {
+      item.run();
+      hide();
+    }
   }
+  
+  // Input event
   input.addEventListener('input', e => filter(input.value));
+  
+  // Keyboard navigation
   document.addEventListener('keydown', e => {
     const mod = e.ctrlKey || e.metaKey;
+    
+    // Toggle command palette
     if (mod && e.key.toLowerCase() === 'k') {
       e.preventDefault();
-      if (overlay.classList.contains('show')) hide(); else show();
+      if (overlay.classList.contains('show')) {
+        hide();
+      } else {
+        show();
+      }
+      return;
     }
+    
+    // Handle command palette navigation
     if (overlay.classList.contains('show')) {
       if (e.key === 'Escape') {
         e.preventDefault();
@@ -1185,9 +1341,14 @@ function initCommandPalette() {
       } else if (e.key === 'Enter') {
         e.preventDefault();
         run(index);
+      } else if (e.key === 'Tab') {
+        e.preventDefault();
+        setActive(e.shiftKey ? index - 1 : index + 1);
       }
     }
   });
+  
+  // Global functions
   window.openCommandPalette = show;
   window.closeCommandPalette = hide;
 }

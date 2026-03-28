@@ -28,6 +28,8 @@
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles-3d.css">
+  <link rel="stylesheet" href="styles-responsive.css">
 </head>
 
 <body data-bs-spy="scroll" data-bs-target=".navbar">
@@ -55,7 +57,7 @@
 
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container-fluid px-md-4">
+    <div class="container">
       <a class="navbar-brand nav-brand" href="#home">Thrinadh</a>
       
       <div class="d-flex align-items-center gap-2 order-lg-3">
@@ -71,7 +73,7 @@
       </div>
 
       <div class="collapse navbar-collapse justify-content-center order-lg-2" id="navbarNav">
-        <div class="navbar-nav nav-links gap-lg-1 gap-xl-3">
+        <div class="navbar-nav nav-links">
           <a class="nav-link active" href="#home">Home</a>
           <a class="nav-link" href="#about">About</a>
           <a class="nav-link" href="#skills">Skills</a>
@@ -88,8 +90,8 @@
   <!-- Hero Section -->
   <header id="home">
     <div class="container">
-      <div class="row align-items-center gy-5">
-        <div class="col-lg-7">
+      <div class="row align-items-center min-vh-100">
+        <div class="col-lg-6 col-xl-7">
           <div class="hero-content">
             <h3 class="reveal">Hello, It's Me</h3>
             <h1 class="reveal">Adabala Venkata Thrinadh</h1>
@@ -98,20 +100,10 @@
               <strong>ethical
                 hacking methodologies</strong>, building robust applications while understanding their vulnerabilities
               from
-              both perspectives.
-            </p>
-
-            <div class="social-links">
-              <a href="https://github.com/thrinadh2005" target="_blank" rel="noopener noreferrer" class="social-btn"
-                aria-label="GitHub"><i class='bx bxl-github'></i></a>
-              <a href="https://www.linkedin.com/in/venkatathrinadh?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BB9VLHs44Qtm5LxmBBwzqdQ%3D%3D" target="_blank"
-                rel="noopener noreferrer" class="social-btn" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
-              <a href="https://www.codechef.com/users/thrinadh2005" target="_blank" rel="noopener noreferrer"
-                class="social-btn" aria-label="CodeChef"><i class='bx bx-code-alt'></i></a>
-              <a href="https://www.hackerrank.com/thrinadh2005" target="_blank" rel="noopener noreferrer"
-                class="social-btn" aria-label="HackerRank"><i class='bx bx-trophy'></i></a>
-              <a href="https://wa.me/919663355000" target="_blank" rel="noopener noreferrer" class="social-btn"
-                aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+              both perspectives.</p>
+            <div class="hero-btns reveal">
+              <a href="#contact" class="btn-primary">Get In Touch <i class="bi bi-arrow-right"></i></a>
+              <a href="RESUME.docx" class="btn-secondary">Download CV <i class="bi bi-download"></i></a>
               <a href="https://www.instagram.com/thrinadh_adabala" target="_blank" rel="noopener noreferrer"
                 class="social-btn" aria-label="Instagram"><i class='bx bxl-instagram'></i></a>
             </div>
@@ -122,11 +114,9 @@
           </div>
         </div>
 
-        <div class="col-lg-5">
-          <div class="hero-image">
-            <div class="image-border">
-              <img src="mypic.png" alt="Thrinadh Profile" onclick="openModal('mypic.png')">
-            </div>
+        <div class="col-lg-6 col-xl-5">
+          <div class="hero-image reveal">
+            <img src="mypic.jpg" alt="Thrinadh" class="img-fluid rounded-3" loading="lazy" onclick="openModal('mypic.jpg')">
           </div>
         </div>
       </div>
@@ -142,11 +132,16 @@
 
   <main id="main">
 
-    <!-- About & Game Section -->
+    <!-- About Section -->
     <section id="about">
       <div class="container">
-        <div class="row align-items-center gy-5">
-          <div class="col-lg-6">
+        <div class="row align-items-center">
+          <div class="col-lg-5">
+            <div class="about-image">
+              <img src="mypic.jpg" alt="Thrinadh About" class="img-fluid rounded-3" loading="lazy" onclick="openModal('mypic.jpg')">
+            </div>
+          </div>
+          <div class="col-lg-7">
             <div class="about-content">
               <h2>About <span>Me</span></h2>
               <h3>Computer Science Student & Cybersecurity Enthusiast</h3>
@@ -157,7 +152,7 @@
 
               <div class="mini-achievements">
                 <h4 class="mb-3">Highlights</h4>
-                <div class="row gy-3">
+                <div class="row g-3">
                   <div class="col-sm-6">
                     <div class="achievement-mini-card">Event Coordinator (STEPCONE)</div>
                   </div>
@@ -178,15 +173,6 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
-            <div class="hero-game-container">
-              <div class="game-info text-center mb-4">
-                <h4 class="mb-3" style="font-family: var(--font-mono); color: var(--accent); letter-spacing: 2px;">CYBER MATRIX</h4>
-                <div class="d-flex justify-content-center gap-4 mb-3">
-                  <div class="game-stat-item"><span class="label" style="font-size: 0.8rem; opacity: 0.7;">LEVEL:</span> <span id="game-level" class="value" style="font-weight: 700; color: var(--accent);">1</span></div>
-                  <div class="game-stat-item"><span class="label" style="font-size: 0.8rem; opacity: 0.7;">BEST:</span> <span id="game-highscore" class="value" style="font-weight: 700; color: var(--accent);">0</span></div>
-                </div>
-                <div id="game-message" class="mb-3" style="font-family: var(--font-mono); font-size: 0.85rem; color: var(--accent3); min-height: 1.2rem;">Ready to breach?</div>
                 <button id="start-game" class="btn-primary btn-sm px-4">Initialize <i class="bi bi-terminal"></i></button>
               </div>
               <div class="matrix-grid mx-auto" id="matrix-grid" style="max-width: 320px;">
@@ -225,14 +211,14 @@
             <div class="section-line"></div>
           </div>
 
-          <div class="skills-container reveal mx-auto" style="max-width: 1000px;">
+          <div class="skills-container reveal mx-auto">
             <div class="skill-card modern-skill-card border-0">
-              <p class="reveal text-center mb-5 px-md-5"
+              <p class="reveal text-center mb-5 px-3 px-md-5"
                 style="color: var(--muted); font-size: 1.15rem; font-weight: 300;">
                 Bridging the gap between <span style="color: var(--accent); font-weight: 600;">theoretical computer
                   science</span> and <span style="color: var(--accent3); font-weight: 600;">modern development</span>.
               </p>
-              <div class="skill-tags reveal d-flex flex-wrap justify-content-center" style="gap: 15px;">
+              <div class="skill-tags reveal d-flex flex-wrap justify-content-center gap-2 gap-md-3">
                 <!-- Languages -->
                 <span class="skill-tag premium-tag lang-tag"><i class='bx bxl-python'></i> Python</span>
                 <span class="skill-tag premium-tag lang-tag"><i class='bx bxl-java'></i> Java</span>
@@ -267,7 +253,7 @@
             <div class="section-line"></div>
           </div>
 
-          <div class="timeline mx-auto" style="max-width: 800px;">
+          <div class="timeline mx-auto">
             <div class="timeline-item">
               <div class="timeline-content">
                 <h3>B.Tech in Computer Science & Engineering</h3>
@@ -304,21 +290,37 @@
             <div class="section-line"></div>
           </div>
 
-          <div class="row gy-4">
+          <div class="row g-4">
             <div class="col-md-4">
               <div class="skill-card modern-skill-card h-100 p-4">
-                <h4 style="margin: 0; color: var(--text); font-size: 1.1rem;">Infosys Springboard</h4>
-                <ul class="mt-3 p-0 ps-3" style="color: var(--muted); font-size: 0.95rem;">
-                  <li>Introduction to Cyber Security</li>
-                  <li>Cybersecurity Fundamentals</li>
-                  <li>Basics of Python</li>
+                <h4 class="mb-3">Infosys Springboard</h4>
+                <ul class="mt-3 ps-3 mb-0">
+                  <li>Introduction to Natural Language Processing</li>
+                  <li>Introduction to Artificial Intelligence</li>
+                  <li>Introduction to Deep Learning</li>
+                  <li>Computer Vision 101</li>
+                  <li>Introduction to Robotic Process Automation</li>
+                  <li>Introduction to OpenAI GPT Models</li>
+                  <li>OpenAI GPT-3 Fundamentals</li>
+                  <li>Generative Models for Developers</li>
+                  <li>Agile Scrum in Practice</li>
+                  <li>Deep Learning for Developers</li>
+                  <li>Artificial Intelligence</li>
+                  <li>Generative AI Unleashing</li>
+                  <li>Prompt Engineering</li>
+                  <li>Introduction to Data Science</li>
                 </ul>
+                <div class="mt-3">
+                  <a href="https://drive.google.com/your-drive-link-here" class="btn-primary btn-sm" target="_blank" rel="noopener noreferrer">
+                    <i class="bi bi-folder2-open"></i> View All Certificates
+                  </a>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
               <div class="skill-card modern-skill-card h-100 p-4">
-                <h4 style="margin: 0; color: var(--text); font-size: 1.1rem;">L&T LearnConnect</h4>
-                <ul class="mt-3 p-0 ps-3" style="color: var(--muted); font-size: 0.95rem;">
+                <h4 class="mb-3">L&T LearnConnect</h4>
+                <ul class="mt-3 ps-3 mb-0">
                   <li>Python Challenge Series</li>
                   <li>Web Development Fundamentals</li>
                   <li>Ethical Hacking Gateway</li>
@@ -327,8 +329,8 @@
             </div>
             <div class="col-md-4">
               <div class="skill-card modern-skill-card h-100 p-4">
-                <h4 style="margin: 0; color: var(--text); font-size: 1.1rem;">NPTEL & Others</h4>
-                <ul class="mt-3 p-0 ps-3" style="color: var(--muted); font-size: 0.95rem;">
+                <h4 class="mb-3">NPTEL & Others</h4>
+                <ul class="mt-3 ps-3 mb-0">
                   <li>Operating System Fundamentals (NPTEL)</li>
                   <li>Problem Solving (HackerRank)</li>
                   <li>Java/Python/CSS (HackerRank)</li>
@@ -350,7 +352,7 @@
             <div class="section-line"></div>
           </div>
 
-          <div class="portfolio-controls mb-5 px-3">
+          <div class="portfolio-controls mb-5">
             <div class="filters d-flex flex-wrap gap-2 justify-content-center">
               <button class="filter-btn active" data-filter="all">All</button>
               <button class="filter-btn" data-filter="web">Web</button>
@@ -360,106 +362,255 @@
           </div>
 
           <div class="row g-4">
-            <!-- Project 1 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-shop"></i></div>
-                  <a href="https://farmer-plant-marketplace.vercel.app" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Farmer Marketplace in new tab"><i class="bi bi-box-arrow-up-right"></i></a>
-                </div>
-                <a href="https://farmer-plant-marketplace.vercel.app" target="_blank" rel="noopener noreferrer" class="project-img-link">
-                  <div class="project-img-wrap">
-                    <img src="farmer-preview.png" alt="Farmer Marketplace Preview" class="project-img">
+            <!-- 3D Carousel Container -->
+            <div class="col-12">
+              <div class="carousel-3d-container">
+                <div class="carousel-3d" id="projectCarousel">
+                  <!-- Project 1 -->
+                  <div class="carousel-item active" data-project="0">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/4facfe/ffffff?text=Farmer+Marketplace" alt="Farmer Marketplace Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('farmer-marketplace')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">15+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">4.8</span>
+                            <span class="stat-label">Rating</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Farmer Marketplace</h3>
+                        <p>A full-stack platform connecting local farmers and plant buyers with discovery features.</p>
+                        <div class="tech-stack">
+                          <span>React</span>
+                          <span>Node.js</span>
+                          <span>MongoDB</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://farmer-plant-marketplace.vercel.app" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('farmer-marketplace')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </a>
-                <h3>Farmer Marketplace</h3>
-                <p>A full-stack platform connecting local farmers and plant buyers with discovery features.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>React</span>
-                  <span>Node.js</span>
-                  <span>MongoDB</span>
-                </div>
-              </div>
-            </div>
 
-            <!-- Project 2 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="research">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-clipboard-data"></i></div>
-                  <a href="#" class="ext-link" aria-label="View project repository on GitHub"><i class="bi bi-github"></i></a>
-                </div>
-                <h3>Results System</h3>
-                <p>Automated academic management system for calculating CGPA and generating reports.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>Python</span>
-                  <span>MySQL</span>
-                  <span>Pandas</span>
-                </div>
-              </div>
-            </div>
+                  <!-- Project 2 -->
+                  <div class="carousel-item" data-project="1">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00d2b4/ffffff?text=Results+System" alt="Results System Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('results-system')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Students</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">95%</span>
+                            <span class="stat-label">Accuracy</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Results System</h3>
+                        <p>Automated academic management system for calculating CGPA and generating reports.</p>
+                        <div class="tech-stack">
+                          <span>Python</span>
+                          <span>MySQL</span>
+                          <span>Pandas</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="#" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('results-system')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
-            <!-- Project 3 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="security">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-key"></i></div>
-                  <a href="https://securepass-pink.vercel.app/#" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open SecurePass in new tab"><i class="bi bi-box-arrow-up-right"></i></a>
-                </div>
-                <a href="https://securepass-pink.vercel.app/#" target="_blank" rel="noopener noreferrer" class="project-img-link">
-                  <div class="project-img-wrap">
-                    <img src="securepass-preview.png" alt="SecurePass Preview" class="project-img">
+                  <!-- Project 3 -->
+                  <div class="carousel-item" data-project="2">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00f2fe/ffffff?text=SecurePass" alt="SecurePass Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('securepass')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">1K+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">256-bit</span>
+                            <span class="stat-label">Encryption</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>SecurePass</h3>
+                        <p>A security tool featuring password strength checking and text encryption tools.</p>
+                        <div class="tech-stack">
+                          <span>Python</span>
+                          <span>Cryptography</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://secure-pass-coral.vercel.app/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('securepass')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </a>
-                <h3>SecurePass</h3>
-                <p>A security tool featuring password strength checking and text encryption tools.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>Python</span>
-                  <span>Cryptography</span>
-                </div>
-              </div>
-            </div>
 
-          
-             <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-book"></i></div>
-                  <a href="https://dictionary-f4nc.onrender.com/" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Dictionary project in new tab"><i class="bi bi-box-arrow-up-right"></i></a>
-                </div>
-                <a href="https://dictionary-f4nc.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-img-link">
-                  <div class="project-img-wrap">
-                    <img src="dictionary-preview.png" alt="Dictionary Preview" class="project-img">
+                  <!-- Project 4 -->
+                  <div class="carousel-item" data-project="3">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/4facfe/ffffff?text=Dictionary" alt="Dictionary Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('dictionary')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">10K+</span>
+                            <span class="stat-label">Words</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Users</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">1</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Dictionary</h3>
+                        <p>A full-stack dictionary app with word definitions, user authentication, and a responsive UI.</p>
+                        <div class="tech-stack">
+                          <span>React</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://dictionary-f4nc.onrender.com/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('dictionary')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </a>
-                <h3>Dictionary</h3>
-                <p>A full-stack dictionary app with word definitions, user authentication, and a responsive UI.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>React</span>
+
+                  <!-- Project 5 -->
+                  <div class="carousel-item" data-project="4">
+                    <div class="project-card-3d">
+                      <div class="project-preview">
+                        <div class="project-media">
+                          <img src="https://via.placeholder.com/400x250/00d2b4/ffffff?text=Portfolio" alt="Portfolio Preview" loading="lazy">
+                          <div class="project-overlay">
+                            <button class="play-demo" onclick="openProjectDemo('portfolio')">
+                              <i class="bi bi-play-circle-fill"></i> Live Demo
+                            </button>
+                          </div>
+                        </div>
+                        <div class="project-stats">
+                          <div class="stat">
+                            <span class="stat-number">3D</span>
+                            <span class="stat-label">Effects</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">60+</span>
+                            <span class="stat-label">FPS</span>
+                          </div>
+                          <div class="stat">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Tech Stack</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="project-content">
+                        <h3>Personal Portfolio</h3>
+                        <p>The site you're visiting! A high-performance portfolio with glassmorphism design.</p>
+                        <div class="tech-stack">
+                          <span>HTML5</span>
+                          <span>CSS3</span>
+                          <span>JS</span>
+                        </div>
+                        <div class="project-actions">
+                          <a href="https://thrinadh.vercel.app/" target="_blank" class="btn-primary">View Project</a>
+                          <button class="btn-secondary" onclick="showProjectDetails('portfolio')">
+                            <i class="bi bi-info-circle"></i> Details
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Carousel Controls -->
+                <div class="carousel-controls">
+                  <button class="carousel-btn prev" id="carouselPrev">
+                    <i class="bi bi-chevron-left"></i>
+                  </button>
+                  <button class="carousel-btn next" id="carouselNext">
+                    <i class="bi bi-chevron-right"></i>
+                  </button>
+                </div>
+
+                <!-- Carousel Indicators -->
+                <div class="carousel-indicators">
+                  <button class="indicator active" data-slide="0"></button>
+                  <button class="indicator" data-slide="1"></button>
+                  <button class="indicator" data-slide="2"></button>
+                  <button class="indicator" data-slide="3"></button>
+                  <button class="indicator" data-slide="4"></button>
                 </div>
               </div>
             </div>
-            <!-- Project 5 -->
-            <div class="col-md-6 col-xl-4 project-item" data-category="web">
-              <div class="project-card h-100">
-                <div class="project-head">
-                  <div class="folder-icon"><i class="bi bi-file-code"></i></div>
-                  <a href="https://thrinadh.vercel.app/" class="ext-link" target="_blank" rel="noopener noreferrer" aria-label="Open Personal Portfolio in new tab"><i class="bi bi-github"></i></a>
-                </div>
-                <a href="https://thrinadh.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-img-link">
-                  <div class="project-img-wrap">
-                    <img src="portfolio-preview.png" alt="Personal Portfolio Preview" class="project-img">
-                  </div>
-                </a>
-                <h3>Personal Portfolio</h3>
-                <p>The site you're visiting! A high-performance portfolio with glassmorphism design.</p>
-                <div class="tech-stack mt-auto pt-3">
-                  <span>HTML5</span>
-                  <span>CSS3</span>
-                  <span>JS</span>
-                </div>
-              </div>
-            </div>
+          </div>
+
           </div>
         </div>
       </div>
@@ -469,45 +620,51 @@
     <section id="achievements">
       <div class="container">
         <div class="section-card">
-        <div class="section-head">
-          <div class="icon"><i class="bi bi-trophy-fill"></i></div>
-          <h2 class="heading">Experience & <span>Achievements</span></h2>
-          <div class="section-line"></div>
-        </div>
+          <div class="section-head">
+            <div class="icon"><i class="bi bi-trophy-fill"></i></div>
+            <h2 class="heading">Experience & <span>Achievements</span></h2>
+            <div class="section-line"></div>
+          </div>
 
-        <div class="achievements-box-wrapper">
-          <ul class="achievements-list">
-            <li>
-              <div class="achievement-icon"><i class="bi bi-calendar-event-fill"></i></div>
-              <div class="achievement-content">
-                <strong>Event Coordinator (STEPCONE)</strong>
-                <p>Managed logistics for national-level tech-fest, ensuring smooth execution of events.</p>
+          <div class="row g-4">
+            <div class="col-lg-6">
+              <div class="achievement-card h-100">
+                <div class="achievement-icon"><i class="bi bi-calendar-event-fill"></i></div>
+                <div class="achievement-content">
+                  <h4>Event Coordinator (STEPCONE)</h4>
+                  <p>Managed logistics for national-level tech-fest, ensuring smooth execution of events.</p>
+                </div>
               </div>
-            </li>
-            <li>
-              <div class="achievement-icon"><i class="bi bi-heart-fill"></i></div>
-              <div class="achievement-content">
-                <strong>NSS Volunteer</strong>
-                <p>Dedicated to community service and social welfare programs, fostering positive impact.</p>
+            </div>
+            <div class="col-lg-6">
+              <div class="achievement-card h-100">
+                <div class="achievement-icon"><i class="bi bi-heart-fill"></i></div>
+                <div class="achievement-content">
+                  <h4>NSS Volunteer</h4>
+                  <p>Dedicated to community service and social welfare programs, fostering positive impact.</p>
+                </div>
               </div>
-            </li>
-            <li>
-              <div class="achievement-icon"><i class="bi bi-moon-fill"></i></div>
-              <div class="achievement-content">
-                <strong>Overnight Hackathon Competitor</strong>
-                <p>Passionate about building innovative solutions under pressure and collaborating in teams.</p>
+            </div>
+            <div class="col-lg-6">
+              <div class="achievement-card h-100">
+                <div class="achievement-icon"><i class="bi bi-moon-fill"></i></div>
+                <div class="achievement-content">
+                  <h4>Overnight Hackathon Competitor</h4>
+                  <p>Passionate about building innovative solutions under pressure and collaborating in teams.</p>
+                </div>
               </div>
-            </li>
-            <li>
-              <div class="achievement-icon"><i class="bi bi-code-slash"></i></div>
-              <div class="achievement-content">
-                <strong>Problem Solving Expert</strong>
-                <p>Consistently ranked in competitive programming platforms like HackerRank & CodeChef.</p>
+            </div>
+            <div class="col-lg-6">
+              <div class="achievement-card h-100">
+                <div class="achievement-icon"><i class="bi bi-code-slash"></i></div>
+                <div class="achievement-content">
+                  <h4>Problem Solving Expert</h4>
+                  <p>Consistently ranked in competitive programming platforms like HackerRank & CodeChef.</p>
+                </div>
               </div>
-            </li>
-          </ul>
+            </div>
+          </div>
         </div>
-      </div>
       </div>
     </section>
 
@@ -531,16 +688,16 @@
                 <div class="contact-method d-flex align-items-center gap-3 mb-4">
                   <i class="bi bi-envelope"></i>
                   <div>
-                    <div style="font-size: 0.85rem; color: var(--muted);">Email Me</div>
-                    <div style="font-weight: 500;">thrinadh2005@gmail.com</div>
+                    <div class="small text-muted">Email Me</div>
+                    <div class="fw-medium">thrinadh2005@gmail.com</div>
                   </div>
                 </div>
 
                 <div class="contact-method d-flex align-items-center gap-3 mb-5">
                   <i class="bi bi-geo-alt"></i>
                   <div>
-                    <div style="font-size: 0.85rem; color: var(--muted);">Location</div>
-                    <div style="font-weight: 500;">Rajahmundry, Andhra Pradesh</div>
+                    <div class="small text-muted">Location</div>
+                    <div class="fw-medium">Rajahmundry, Andhra Pradesh</div>
                   </div>
                 </div>
 
@@ -578,16 +735,20 @@
       </div>
     </section>
 
-    <footer
-      style="text-align: center; padding: 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 40px;">
+    <footer class="text-center py-5 text-muted small border-top mt-5">
       <!-- Deployment Trigger: 2026-02-10T01:21:00 -->
       <p>© <span id="year">2026</span> Adabala Venkata Thrinadh. Built with passion & code.</p>
-      <a href="#home" aria-label="Back to top" title="Back to top"
-        style="display: inline-block; margin-top: 10px; color: var(--accent); font-size: 1.5rem;"><i
-          class='bx bx-up-arrow-alt'></i></a>
+      <a href="#home" class="d-inline-block mt-2 text-accent fs-4" aria-label="Back to top" title="Back to top">
+        <i class='bx bx-up-arrow-alt'></i>
+      </a>
     </footer>
 
   </main>
+
+  <!-- Keyboard Shortcut Hint -->
+  <div class="keyboard-hint">
+    Press <kbd>Ctrl</kbd> + <kbd>K</kbd> to open command palette
+  </div>
 
   <!-- Image Modal -->
   <div id="imageModal" class="modal">
