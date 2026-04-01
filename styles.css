@@ -1423,20 +1423,3 @@ section.show {
     text-align: center;
   }
 }
-
-/* ================= VISITOR COUNTER ================= */
-.visitor-counter-section .glass-panel:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 30px rgba(0, 242, 254, 0.15);
-  border-color: var(--accent) !important;
-}
-
-.visitor-counter-section i {
-  animation: activity-pulse 2s ease-in-out infinite;
-}
-
-@keyframes activity-pulse {
-  0% { opacity: 0.5; transform: scale(0.9); }
-  50% { opacity: 1; transform: scale(1.1); }
-  100% { opacity: 0.5; transform: scale(0.9); }
-}
