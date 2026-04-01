@@ -1214,27 +1214,27 @@ document.addEventListener('DOMContentLoaded', () => {
   initVoiceControl();
   initCommandPalette();
   
-  // Minimalist Visitor Count
+  // Minimalist Visitor Count (Dynamic)
   async function updateVisitorCount() {
     const counterEl = document.getElementById('visitor-count');
     if (!counterEl) return;
     
     try {
-      // Fetch count from visitorbadge API (returns an SVG, we'll parse it for the number)
-      const response = await fetch('https://api.visitorbadge.io/api/visitors?path=thrinadh.vercel.app');
-      const svgText = await response.text();
+      // CounterAPI.dev - Simple JSON counter that supports CORS
+      // This will increment the count and return the new value
+      const response = await fetch('https://api.counterapi.dev/v1/thrinadh_portfolio/visits/up');
+      const data = await response.json();
       
-      // Extract the second number from the SVG (the count)
-      const matches = svgText.match(/<text[^>]*>([\d,]+)<\/text>/g);
-      if (matches && matches.length >= 2) {
-        const count = matches[1].replace(/<[^>]*>/g, '');
-        counterEl.textContent = count;
+      if (data && data.count) {
+        // Format number with commas for readability (e.g., 1,234)
+        counterEl.textContent = data.count.toLocaleString();
       } else {
-        counterEl.textContent = '100+'; // Fallback
+        counterEl.textContent = 'Active';
       }
     } catch (err) {
       console.error('Visitor count error:', err);
-      counterEl.textContent = 'Active';
+      // Fallback if the API is down
+      counterEl.textContent = 'Live';
     }
   }
   updateVisitorCount();
