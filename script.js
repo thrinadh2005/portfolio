@@ -1213,4 +1213,29 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initVoiceControl();
   initCommandPalette();
+  
+  // Minimalist Visitor Count
+  async function updateVisitorCount() {
+    const counterEl = document.getElementById('visitor-count');
+    if (!counterEl) return;
+    
+    try {
+      // Fetch count from visitorbadge API (returns an SVG, we'll parse it for the number)
+      const response = await fetch('https://api.visitorbadge.io/api/visitors?path=thrinadh.vercel.app');
+      const svgText = await response.text();
+      
+      // Extract the second number from the SVG (the count)
+      const matches = svgText.match(/<text[^>]*>([\d,]+)<\/text>/g);
+      if (matches && matches.length >= 2) {
+        const count = matches[1].replace(/<[^>]*>/g, '');
+        counterEl.textContent = count;
+      } else {
+        counterEl.textContent = '100+'; // Fallback
+      }
+    } catch (err) {
+      console.error('Visitor count error:', err);
+      counterEl.textContent = 'Active';
+    }
+  }
+  updateVisitorCount();
 });
