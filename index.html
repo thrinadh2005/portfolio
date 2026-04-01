@@ -581,9 +581,14 @@
     <footer
       style="text-align: center; padding: 40px; color: var(--muted); font-size: 0.9rem; border-top: 1px solid var(--border); margin-top: 40px;">
       <!-- Deployment Trigger: 2026-02-10T01:21:00 -->
-      <div class="d-flex align-items-center justify-content-center flex-wrap gap-3">
+      <div class="d-flex align-items-center justify-content-center flex-wrap gap-2">
         <p class="mb-0">© <span id="year">2026</span> Adabala Venkata Thrinadh. Built with passion & code.</p>
-        <img src="https://api.visitorbadge.io/api/visitors?path=thrinadh.vercel.app&label=VISITORS&labelColor=%230f172a&countColor=%2300f2fe&style=flat-square" alt="Visitor Count" style="height: 20px; border-radius: 4px; box-shadow: 0 0 10px var(--accent-glow);"/>
+        <span style="color: var(--muted); font-size: 0.9rem; margin-left: 5px;">|</span>
+        <div class="d-flex align-items-center gap-2 ms-1">
+          <span class="visitor-light"></span>
+          <span style="color: var(--muted); font-size: 0.9rem;">Visitors:</span>
+          <img src="https://api.visitorbadge.io/api/visitors?path=thrinadh.vercel.app&label=&labelColor=%230f172a&countColor=transparent&style=flat-square" alt="Visitor Count" style="height: 18px; filter: grayscale(1) invert(1) brightness(0.8); opacity: 0.8;"/>
+        </div>
       </div>
 
       <a href="#home" aria-label="Back to top" title="Back to top"

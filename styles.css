@@ -1423,3 +1423,20 @@ section.show {
     text-align: center;
   }
 }
+
+/* ================= VISITOR LIGHT ================= */
+.visitor-light {
+  width: 8px;
+  height: 8px;
+  background-color: #00ff00;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 5px #00ff00;
+  animation: blink-green 2s infinite;
+}
+
+@keyframes blink-green {
+  0% { opacity: 0.3; box-shadow: 0 0 0px #00ff00; }
+  50% { opacity: 1; box-shadow: 0 0 8px #00ff00; }
+  100% { opacity: 0.3; box-shadow: 0 0 0px #00ff00; }
+}
