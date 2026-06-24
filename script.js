@@ -430,7 +430,7 @@ function initVoiceControl() {
       { 
         selector: '#about', 
         action: () => { smoothScrollTo('#about'); highlightSection('#about'); },
-        text: 'Next, the About section. Thrinadh combines secure coding with ethical hacking. He maintains a high CGPA of 9.33 at GMR Institute of Technology and is passionate about solving real-world security challenges.'
+        text: 'Next, the About section. Thrinadh combines secure coding with ethical hacking. He maintains a high CGPA of 9.4 at GMR Institute of Technology and is passionate about solving real-world security challenges.'
       },
       { 
         selector: '#skills', 
@@ -1023,7 +1023,7 @@ function initVoiceControl() {
 
 // Portfolio explanation functions
 function explainThrinadh() {
-  const text = `Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology, a Google Student Ambassador, and an Intern at Infosys. He's passionate about cybersecurity and ethical hacking, combining secure coding practices with understanding vulnerabilities. Thrinadh maintains an excellent academic record with a 9.33 CGPA. He's skilled in Python, Java, C, web technologies like React and Node, databases like MongoDB, and cybersecurity fundamentals.`;
+  const text = `Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology, a Google Student Ambassador, and an Intern at Infosys. He's passionate about cybersecurity and ethical hacking, combining secure coding practices with understanding vulnerabilities. Thrinadh maintains an excellent academic record with a 9.4 CGPA. He's skilled in Python, Java, C, web technologies like React and Node, databases like MongoDB, and cybersecurity fundamentals.`;
   
   smoothScrollTo('#about');
   highlightSection('#about');
@@ -1066,7 +1066,7 @@ function explainEducation() {
   smoothScrollTo('#education');
   highlightSection('#education');
   
-  const text = `Thrinadh is currently pursuing his B.Tech in Computer Science and Engineering at GMR Institute of Technology with an impressive 9.33 CGPA. He completed his intermediate education with a 9.76 GPA and scored 92.3% in his secondary school. His excellent academic performance reflects his dedication to learning.`;
+  const text = `Thrinadh is currently pursuing his B.Tech in Computer Science and Engineering at GMR Institute of Technology with an impressive 9.4 CGPA. He completed his intermediate education with a 9.76 GPA and scored 92.3% in his secondary school. His excellent academic performance reflects his dedication to learning.`;
   speak(text);
 }
 
