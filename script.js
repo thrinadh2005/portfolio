@@ -425,22 +425,22 @@ function initVoiceControl() {
       { 
         selector: '#home', 
         action: () => { smoothScrollTo('#home'); highlightSection('#home'); },
-        text: 'We begin at the Home section. Here you can find Thrinadh\'s quick introduction as a CSE student and cybersecurity enthusiast, along with his social links and resume.'
+        text: 'We begin at the Home section. Here you can find Thrinadh\'s quick introduction as a CSE student, Google Student Ambassador, and cybersecurity enthusiast, along with his social links and resume.'
       },
       { 
         selector: '#about', 
         action: () => { smoothScrollTo('#about'); highlightSection('#about'); },
-        text: 'Next, the About section. Thrinadh combines secure coding with ethical hacking. He maintains a high CGPA of 9.4 at GMR Institute of Technology and is passionate about solving real-world security challenges.'
+        text: 'Next, the About section. Thrinadh combines secure coding with ethical hacking. He maintains a high CGPA of 9.33 at GMR Institute of Technology and is passionate about solving real-world security challenges.'
       },
       { 
         selector: '#skills', 
         action: () => { smoothScrollTo('#skills'); highlightSection('#skills'); },
-        text: 'Moving to Skills. He is proficient in Python, Java, and C, with a strong foundation in data structures, algorithms, and cybersecurity fundamentals.'
+        text: 'Moving to Skills. He is proficient in Python, Java, C, and JavaScript, with a strong foundation in modern web tech like React and Node.js, along with robust database and cybersecurity fundamentals.'
       },
       { 
         selector: '#portfolio', 
         action: () => { smoothScrollTo('#portfolio'); highlightSection('#portfolio'); },
-        text: 'The Portfolio section highlights his key projects: the Farmer Marketplace, an automated Results System, the SecurePass security toolkit, and a feature-rich Dictionary app.'
+        text: 'The Portfolio section highlights his key projects: the Farmer Marketplace, Sri Lalitamba Nursery, the SecurePass security toolkit, the Marks Calculator, the sttp pentesting toolkit, and a feature-rich Dictionary app.'
       },
       { 
         selector: '#education', 
@@ -450,12 +450,12 @@ function initVoiceControl() {
       { 
         selector: '#achievements', 
         action: () => { smoothScrollTo('#achievements'); highlightSection('#achievements'); },
-        text: 'In Achievements, you\'ll see his leadership as an Event Coordinator, his community service as an NSS volunteer, and his success in hackathons and competitive programming.'
+        text: 'In Experience and Achievements, you\'ll see his role as a Google Student Ambassador, his internship at Infosys, his leadership as an Event Coordinator, and his community service as an NSS volunteer.'
       },
       { 
         selector: '#certifications', 
         action: () => { smoothScrollTo('#certifications'); highlightSection('#certifications'); },
-        text: 'Finally, his Certifications from Infosys, L&T, and NPTEL demonstrate his commitment to continuous learning in cybersecurity and web development.'
+        text: 'Finally, his Certifications are grouped into four key areas: AI and Machine Learning, Software Dev and Databases, Cybersecurity and Tech, and Professional Skills, showcasing credentials from Google, MongoDB, and Infosys.'
       },
       { 
         selector: '#contact', 
@@ -1023,7 +1023,7 @@ function initVoiceControl() {
 
 // Portfolio explanation functions
 function explainThrinadh() {
-  const text = `Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology. He's passionate about cybersecurity and ethical hacking, combining secure coding practices with understanding vulnerabilities. Thrinadh maintains an excellent academic record with a 9.4 CGPA and is actively involved in hackathons, competitive programming, and community service through NSS. He's skilled in Python, Java, C programming, web technologies, and cybersecurity fundamentals.`;
+  const text = `Adabala Venkata Thrinadh is a Computer Science student at GMR Institute of Technology, a Google Student Ambassador, and an Intern at Infosys. He's passionate about cybersecurity and ethical hacking, combining secure coding practices with understanding vulnerabilities. Thrinadh maintains an excellent academic record with a 9.33 CGPA. He's skilled in Python, Java, C, web technologies like React and Node, databases like MongoDB, and cybersecurity fundamentals.`;
   
   smoothScrollTo('#about');
   highlightSection('#about');
@@ -1031,7 +1031,7 @@ function explainThrinadh() {
 }
 
 function explainPortfolioOverview() {
-  const text = `This portfolio showcases Thrinadh's journey as a Computer Science student and cybersecurity enthusiast. It includes his educational background, technical skills, academic projects, certifications from platforms like Infosys Springboard and L&T LearnConnect, and achievements in competitive programming and hackathons. The portfolio demonstrates his expertise in web development, security tools, and problem-solving abilities.`;
+  const text = `This portfolio showcases Thrinadh's journey as a Computer Science student, Google Student Ambassador, and cybersecurity enthusiast. It includes his educational background, diverse technical skills, numerous full-stack projects, categorized certifications from platforms like Google, MongoDB, and Infosys, and achievements in leadership and community service.`;
   
   speak(text);
 }
@@ -1042,13 +1042,15 @@ function explainProjects() {
   
   const projects = [
     'Farmer Marketplace - A full-stack platform connecting local farmers and plant buyers, built with React, Node.js, and MongoDB.',
-    'Results System - An automated academic management system for calculating CGPA and generating reports using Python and MySQL.',
-    'SecurePass - A security tool featuring password strength checking and text encryption using Python and cryptography.',
-    'Dictionary - A full-stack dictionary app with word definitions and user authentication built with React.',
-    'Personal Portfolio - This high-performance portfolio website with glassmorphism design using HTML5, CSS3, and JavaScript.'
+    'Sri Lalitamba Nursery - A production-ready POS and digital storefront.',
+    'Marks Calculator - An academic toolkit for predicting and calculating marks.',
+    'sttp - An educational secure penetration testing toolkit.',
+    'SecurePass - A security tool featuring password strength checking and text encryption.',
+    'Dictionary - A full-stack dictionary app with word definitions and translator.',
+    'Personal Portfolio - This high-performance portfolio website.'
   ];
   
-  const text = `Thrinadh has worked on five main projects: ${projects.join('. ')}. These projects demonstrate his skills in full-stack development, security tools, and modern web technologies.`;
+  const text = `Thrinadh has worked on several prominent projects: ${projects.join(' ')}. These projects demonstrate his skills in full-stack development, database management, security tools, and modern web technologies.`;
   speak(text);
 }
 
@@ -1056,7 +1058,7 @@ function explainSkills() {
   smoothScrollTo('#skills');
   highlightSection('#skills');
   
-  const text = `Thrinadh has a diverse skill set including programming languages like Python, Java, and C. He's strong in computer science fundamentals including data structures, algorithms, database management, and object-oriented programming. His technical skills include Git and GitHub, web technologies, problem-solving, and cybersecurity. He bridges the gap between theoretical computer science and modern development practices.`;
+  const text = `Thrinadh has a diverse skill set including programming languages like Python, Java, JavaScript, and C. He's strong in computer science fundamentals and modern web technologies such as React, Node.js, HTML5, and CSS3. He is also proficient with databases like MongoDB and SQL. His technical skills perfectly complement his expertise in problem-solving and cybersecurity.`;
   speak(text);
 }
 
@@ -1064,7 +1066,7 @@ function explainEducation() {
   smoothScrollTo('#education');
   highlightSection('#education');
   
-  const text = `Thrinadh is currently pursuing his B.Tech in Computer Science and Engineering at GMR Institute of Technology with an impressive 9.4 CGPA. He completed his intermediate education with a 9.76 GPA and scored 92.3% in his secondary school. His excellent academic performance reflects his dedication to learning and excellence in computer science.`;
+  const text = `Thrinadh is currently pursuing his B.Tech in Computer Science and Engineering at GMR Institute of Technology with an impressive 9.33 CGPA. He completed his intermediate education with a 9.76 GPA and scored 92.3% in his secondary school. His excellent academic performance reflects his dedication to learning.`;
   speak(text);
 }
 
@@ -1072,7 +1074,7 @@ function explainAchievements() {
   smoothScrollTo('#achievements');
   highlightSection('#achievements');
   
-  const text = `Thrinadh has several notable achievements including serving as Event Coordinator for STEPCONE, a national-level tech fest. He's an active NSS volunteer dedicated to community service. He competes in overnight hackathons, demonstrating his ability to build innovative solutions under pressure. He's also a problem-solving expert with consistent rankings on competitive programming platforms like HackerRank and CodeChef.`;
+  const text = `Thrinadh serves as a Google Student Ambassador, fostering the campus developer community, and is an Intern at Infosys. He has also been an Event Coordinator for STEPCONE, a national-level tech fest, and is an active NSS volunteer dedicated to community service.`;
   speak(text);
 }
 
@@ -1080,7 +1082,7 @@ function explainCertifications() {
   smoothScrollTo('#certifications');
   highlightSection('#certifications');
   
-  const text = `Thrinadh has earned certifications from multiple platforms. From Infosys Springboard, he completed courses in Introduction to Cyber Security, Cybersecurity Fundamentals, and Basics of Python. From L&T LearnConnect, he earned certifications in Python Challenge Series, Web Development Fundamentals, and Ethical Hacking Gateway. He also has NPTEL certifications in Operating System Fundamentals and various programming certifications from HackerRank.`;
+  const text = `Thrinadh has earned numerous certifications categorized into four key areas: AI and Machine Learning, Software Development and Databases, Cybersecurity and Advanced Tech, and Professional Skills. Notable certifications include Foundations of Cybersecurity from Google, MongoDB CRUD Operations, and various Generative AI and Deep Learning courses from Infosys Springboard.`;
   speak(text);
 }
 
