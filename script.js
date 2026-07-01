@@ -740,7 +740,7 @@ function initVoiceControl() {
       return;
     }
     if (c.includes('open resume') || c.includes('view resume')) {
-      const link = document.querySelector('a[href="RESUME.pdf"]');
+      const link = document.querySelector('a[href="RESUME.docx"]');
       if (link) link.click();
       speak('Opening resume');
       return;
@@ -814,7 +814,7 @@ function initVoiceControl() {
       return;
     }
     if (c.includes('resume') || c.includes('view resume')) {
-      const link = document.querySelector('a[href="RESUME.pdf"]');
+      const link = document.querySelector('a[href="RESUME.docx"]');
       if (link) link.click();
       speak('Opening resume');
       return;
@@ -1123,7 +1123,7 @@ function initCommandPalette() {
     });
     const soc = [['GitHub', 'GitHub'], ['LinkedIn', 'LinkedIn'], ['CodeChef', 'CodeChef'], ['HackerRank', 'HackerRank'], ['Instagram', 'Instagram'], ['WhatsApp', 'WhatsApp']];
     soc.forEach(s => arr.push({ label: 'Open ' + s[0], group: 'Social', run: () => { const link = document.querySelector(`.social-links a[aria-label="${s[1]}"]`); if (link) link.click(); } }));
-    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['View Resume', () => { const l = document.querySelector('a[href="RESUME.pdf"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
+    [['Toggle theme', () => themeToggle.click()], ['Start Portfolio Tour', () => startPortfolioTour()], ['Dark mode', () => { if (body.classList.contains('light')) themeToggle.click(); }], ['Light mode', () => { if (!body.classList.contains('light')) themeToggle.click(); }], ['View Resume', () => { const l = document.querySelector('a[href="RESUME.docx"]'); if (l) l.click(); }], ['Filter All', () => { const b = document.querySelector(`.filter-btn[data-filter="all"]`); if (b) b.click(); }], ['Filter Web', () => { const b = document.querySelector(`.filter-btn[data-filter="web"]`); if (b) b.click(); }], ['Filter Security', () => { const b = document.querySelector(`.filter-btn[data-filter="security"]`); if (b) b.click(); }], ['Filter Research', () => { const b = document.querySelector(`.filter-btn[data-filter="research"]`); if (b) b.click(); }]].forEach(p => arr.push({ label: p[0], group: 'Actions', run: p[1] }));
     items = arr;
   }
   function show() {
