@@ -440,7 +440,7 @@ function initVoiceControl() {
       { 
         selector: '#portfolio', 
         action: () => { smoothScrollTo('#portfolio'); highlightSection('#portfolio'); },
-        text: 'The Portfolio section highlights his key projects: the Farmer Marketplace, Sri Lalitamba Nursery, the SecurePass security toolkit, the Marks Calculator, the sttp pentesting toolkit, and a feature-rich Dictionary app.'
+        text: 'The Portfolio section highlights his key projects: the Farmer Marketplace, Sri Lalitamba Nursery, the SecurePass security toolkit, the Marks Calculator, and a feature-rich Dictionary app.'
       },
       { 
         selector: '#education', 
@@ -1044,7 +1044,6 @@ function explainProjects() {
     'Farmer Marketplace - A full-stack platform connecting local farmers and plant buyers, built with React, Node.js, and MongoDB.',
     'Sri Lalitamba Nursery - A production-ready POS and digital storefront.',
     'Marks Calculator - An academic toolkit for predicting and calculating marks.',
-    'sttp - An educational secure penetration testing toolkit.',
     'SecurePass - A security tool featuring password strength checking and text encryption.',
     'Dictionary - A full-stack dictionary app with word definitions and translator.',
     'Personal Portfolio - This high-performance portfolio website.'
